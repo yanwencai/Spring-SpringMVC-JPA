@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+       ">
+
+
+    <context:property-placeholder location="classpath:properties/jdbc.properties"/>
+    <!-- 1.数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter">
+        <property name="driverClass" value="${driverClass}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+    </bean>
+
+    <!-- 2.entityManagerFactory 相当于sessionFactory -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+        </property>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <!-- 自动扫描entity -->
+        <property name="packagesToScan" value="com.*"/>
+        <property name="jpaProperties">
+            <props>
+                <!--常见的还有 MySQL5Dialect、MySQL5InnoDBDialect、MySQL57InnoDBDialect、MySQLDialect、MySQLInnoDBDialect、MySQLMyISAMDialect-->
+                <!--如果你使用的数据库是 5.7 的话可以考虑用：MySQL57InnoDBDialect-->
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+                <!--是否显示 SQL-->
+                <prop key="hibernate.show_sql">true</prop>
+                <!--如果显示 SQL，输出的 SQL 时候要格式化-->
+                <prop key="hibernate.format_sql">true</prop>
+                <!--在显示的 SQL 中增加一些 Hibernate 提供的注释说明，依此来解释它生成的 SQL 意思-->
+                <!--配置如何根据java模型生成数据库表结构,常用update,validate-->
+                <prop key="hibernate.use_sql_comments">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <!--关于这个属性可以看：http://blog.csdn.net/dracotianlong/article/details/27834143-->
+                <!--ImprovedNamingStrategy 是采用下划线，符合我们一般命名表字段的习惯-->
+                <!--所以，命名规则 My_NAME->MyName-->
+                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+                <!--设置最大的外链接深度，关键建议是0~3，0表示禁用-->
+                <!--<prop key="hibernate.max_fetch_depth">3</prop>-->
+
+
+                <!-- 开启二级缓存，这里使用的EhCache，如果要使用这个也需要引入对应的依赖包（下面的参数都是适用于二级缓存的，如果二级缓存关闭，其他的都没有意义） -->
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <!-- 开启查询缓存 -->
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <!-- 高速缓存提供程序 -->
+                <!-- 具体可以看官网：http://www.ehcache.org/documentation/2.8/integrations/hibernate.html-->
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.provider_configuration">classpath*:cache/ehcache.xml</prop>
+                <!--如果开启了二级缓存，使用该配置可以看二级缓存中存放的数据条数，查询时错过的数据条数，缓存命中率等信息-->
+                <!--如果开启为true，有一些列方法可以查询这些结果，但是需要你另外写代码，具体可以自己搜索下-->
+                <prop key="hibernate.generate_statistics">false</prop>
+            </props>
+
+        </property>
+
+    </bean>
+
+    <!-- 3.事物 -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!--REQUIRED 表示：支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择。-->
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="register*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="modify*" propagation="REQUIRED"/>
+            <tx:method name="edit*" propagation="REQUIRED"/>
+            <tx:method name="batch*"  propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="del*" propagation="REQUIRED"/>
+            <tx:method name="deleteAndRepair" propagation="REQUIRED"/>
+            <tx:method name="remove*" propagation="REQUIRED"/>
+            <tx:method name="time*" propagation="REQUIRED"/><!--定时器方法-->
+            <tx:method name="repair" propagation="REQUIRED"/>
+
+
+            <!--以这些单词开头的方法不加入事务-->
+            <!--SUPPORTS 表示：支持当前事务，如果当前没有事务，就以非事务方式执行。-->
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="load*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="search*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="datagrid*" propagation="SUPPORTS" read-only="true"/>
+            <tx:method name="show*" propagation="SUPPORTS" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- aop事务 -->
+    <aop:config>
+        <aop:pointcut id="transactionPointcut" expression="execution(* com.*.service.*.*(..))"/>
+        <aop:advisor advice-ref="transactionAdvice" pointcut-ref="transactionPointcut"/>
+    </aop:config>
+
+
+    <!-- 4.dao 或者说repository扫描配置 -->
+    <!-- 首先引入jpa命名空间-->
+    <jpa:repositories base-package="com.*" entity-manager-factory-ref="entityManagerFactory" transaction-manager-ref="transactionManager"/>
+
+</beans>
