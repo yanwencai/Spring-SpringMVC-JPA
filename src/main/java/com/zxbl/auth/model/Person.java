@@ -1,6 +1,5 @@
 package com.zxbl.auth.model;
 
-import com.sun.org.apache.xpath.internal.operations.String;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +16,7 @@ public class Person {
 
     private int id;
     private int workNumber;//工号
-    private String username;
+    private String userName;
     private String password;
     private String realName;//姓名
     private String email;
@@ -93,12 +92,12 @@ public class Person {
         this.updateTime = updateTime;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public int getWorkNumber() {

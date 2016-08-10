@@ -2,8 +2,8 @@ package com.zxbl.auth.dao;
 
 
 import com.zxbl.auth.model.Person;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
-import org.springframework.data.repository.RepositoryDefinition;
 
 import java.util.List;
 
@@ -14,5 +14,8 @@ import java.util.List;
 
 public interface IAuthPerson extends Repository<Person,Integer> {
 
-    public List<Person> getByUsernameAfter(String username);
+    public List<Person> getByUserNameAfter(String userName);
+
+    @Query("select p from Person p")
+    public List<Person> getAll();
 }

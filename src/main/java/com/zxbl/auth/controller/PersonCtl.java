@@ -2,10 +2,13 @@ package com.zxbl.auth.controller;
 
 
 import com.zxbl.auth.dao.IAuthPerson;
+import com.zxbl.auth.model.Person;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/9.
@@ -31,6 +34,13 @@ public class PersonCtl {
     @RequestMapping("admin/personMgr")
     public java.lang.String personMgr(){
         return "person/personMgr";
+    }
+
+    @ResponseBody
+    @RequestMapping("admin/getAllPerson")
+    public Object getAllPerson(){
+        List<Person> all = this.iAuthPerson.getAll();
+        return all;
     }
 
 }

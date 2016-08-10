@@ -8,107 +8,104 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+
 </head>
 <body>
-<h2>Basic CRUD Application</h2>
-<p>Click the buttons on datagrid toolbar to do crud actions.</p>
+<table id="dg"></table>
 
-<table id="dg" title="My Users" class="easyui-datagrid" style="width:700px;height:250px"
-       url="get_users.php"
-       toolbar="#toolbar" pagination="true"
-       rownumbers="true" fitColumns="true" singleSelect="true">
-    <thead>
-    <tr>
-        <th field="firstname" width="50">First Name</th>
-        <th field="lastname" width="50">Last Name</th>
-        <th field="phone" width="50">Phone</th>
-        <th field="email" width="50">Email</th>
-    </tr>
-    </thead>
-</table>
-<div id="toolbar">
-    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">New User</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Edit User</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">Remove User</a>
-</div>
-
-<div id="dlg" class="easyui-dialog" style="width:400px"
-     closed="true" buttons="#dlg-buttons">
-    <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
-        <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">User Information</div>
-        <div style="margin-bottom:10px">
-            <input name="firstname" class="easyui-textbox" required="true" label="First Name:" style="width:100%">
-        </div>
-        <div style="margin-bottom:10px">
-            <input name="lastname" class="easyui-textbox" required="true" label="Last Name:" style="width:100%">
-        </div>
-        <div style="margin-bottom:10px">
-            <input name="phone" class="easyui-textbox" required="true" label="Phone:" style="width:100%">
-        </div>
-        <div style="margin-bottom:10px">
-            <input name="email" class="easyui-textbox" required="true" validType="email" label="Email:" style="width:100%">
-        </div>
-    </form>
-</div>
-<div id="dlg-buttons">
-    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
-</div>
-<script type="text/javascript">
-    var url;
-    function newUser(){
-        $('#dlg').dialog('open').dialog('center').dialog('setTitle','New User');
-        $('#fm').form('clear');
-        url = 'save_user.php';
-    }
-    function editUser(){
-        var row = $('#dg').datagrid('getSelected');
-        if (row){
-            $('#dlg').dialog('open').dialog('center').dialog('setTitle','Edit User');
-            $('#fm').form('load',row);
-            url = 'update_user.php?id='+row.id;
-        }
-    }
-    function saveUser(){
-        $('#fm').form('submit',{
-            url: url,
-            onSubmit: function(){
-                return $(this).form('validate');
-            },
-            success: function(result){
-                var result = eval('('+result+')');
-                if (result.errorMsg){
-                    $.messager.show({
-                        title: 'Error',
-                        msg: result.errorMsg
-                    });
-                } else {
-                    $('#dlg').dialog('close');        // close the dialog
-                    $('#dg').datagrid('reload');    // reload the user data
+<script>
+    $('#dg').datagrid({
+        url:'getAllPerson',
+        toolbar:"#tb",
+        pagination:true,
+        rownumbers:true,
+        pageList:[10,20,30,40,50,100],
+        singleSelect:true,
+        idField:'id',
+        columns:[[
+            {field:'id',title:'id',width:100,hidden:true},
+            {field:'realName',title:'realName',width:100,editor:'text'},
+            {field:'workNumber',title:'workNumber',width:100,editor:'text'},
+            {field:'age',title:'age',width:100,align:'right',editor:'text'},
+            {field:'sex',title:'sex',width:100,editor:'text'},
+            {field:'userName',title:'userName',width:100,editor:'text'},
+            {field:'email',title:'email',width:100,editor:'text'},
+            {field:'createTime',title:'createTime',width:100,editor:'datebox'},
+            {field:'action',title:'Action',width:80,align:'center',
+                formatter:function(value,row,index){
+                    if (row.editing){
+                        var s = '<a href="#" onclick="saverow(this)">Save</a> ';
+                        var c = '<a href="#" onclick="cancelrow(this)">Cancel</a>';
+                        return s+c;
+                    } else {
+                        var e = '<a href="#" onclick="editrow(this)">Edit</a> ';
+                        var d = '<a href="#" onclick="deleterow(this)">Delete</a>';
+                        return e+d;
+                    }
                 }
             }
+
+        ]],
+        onBeforeEdit:function(index,row){
+            row.editing = true;
+            updateActions(index);
+        },
+        onAfterEdit:function(index,row){
+            row.editing = false;
+            updateActions(index);
+        },
+        onCancelEdit:function(index,row){
+            row.editing = false;
+            updateActions(index);
+        }
+
+
+    });
+    function updateActions(index){
+        $('#dg').datagrid('updateRow',{
+            index: index,
+            row:{}
         });
     }
-    function destroyUser(){
-        var row = $('#dg').datagrid('getSelected');
-        if (row){
-            $.messager.confirm('Confirm','Are you sure you want to destroy this user?',function(r){
-                if (r){
-                    $.post('destroy_user.php',{id:row.id},function(result){
-                        if (result.success){
-                            $('#dg').datagrid('reload');    // reload the user data
-                        } else {
-                            $.messager.show({    // show error message
-                                title: 'Error',
-                                msg: result.errorMsg
-                            });
-                        }
-                    },'json');
-                }
-            });
-        }
+    function getRowIndex(target){
+        var tr = $(target).closest('tr.datagrid-row');
+        return parseInt(tr.attr('datagrid-row-index'));
     }
+    function editrow(target){
+        $('#dg').datagrid('beginEdit', getRowIndex(target));
+    }
+    function saverow(target){
+        $('#dg').datagrid('endEdit', getRowIndex(target));
+    }
+
+
 </script>
+<%--
+<table id="dg" class="easyui-datagrid" style="height:250px"
+       data-options="url:'getAllPerson',fitColumns:true,singleSelect:true"
+       iconCls="icon-save" title="person" rownumbers="true" pagination="true"
+       toolbar="#tb" >
+    <thead>
+    <tr>
+       <th data-options="field:'id',width:100">id</th>
+        <th data-options="field:'age',width:100">age</th>
+        <th data-options="field:'email',width:100,align:'right'">email</th>
+
+        <th data-options="field:'realName',width:100">realName</th>
+        <th data-options="field:'sex',width:100">sex</th>
+        <th data-options="field:'userName',width:100">userName</th>
+        <th data-options="field:'workNumber',width:100">workNumber</th>
+    </tr>
+    </thead>
+</table>--%>
+<div id="tb">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:alert('Add')">Add</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="javascript:alert('Cut')">Cut</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="modify()">修改</a>
+</div>
+
+
 </body>
+
+
 </html>

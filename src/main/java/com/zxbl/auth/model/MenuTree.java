@@ -1,10 +1,12 @@
-package com.zxbl.auth.model.tree;
+package com.zxbl.auth.model;
 
 
 
 
-
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  id：节点ID，对加载远程数据很重要。
@@ -15,16 +17,45 @@ package com.zxbl.auth.model.tree;
  children: 一个节点数组声明了若干节点。
  * Created by Administrator on 2016/8/9.
  */
+@Entity
+@Table(name = "tb_auth_menutree")
 public class MenuTree {
 
     private int id;
+    private int level;//级别 一级菜单还是二级等等
+    private int parentId;//父级菜单id
     private String text;
     private String state;
     private String iconCls;
-    private boolean checked;
-    private Attributes attributes;
-    private MenuTree children;
+    private String checked;
+   // private Attributes attributes;
+    //private MenuTree children;
 
+    @Id
+    @GeneratedValue
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
     public String getText() {
         return text;
     }
@@ -33,20 +64,12 @@ public class MenuTree {
         this.text = text;
     }
 
-    public boolean isChecked() {
+    public String getChecked() {
         return checked;
     }
 
-    public void setChecked(boolean checked) {
+    public void setChecked(String checked) {
         this.checked = checked;
-    }
-
-    public MenuTree getChildren() {
-        return children;
-    }
-
-    public void setChildren(MenuTree children) {
-        this.children = children;
     }
 
     public String getIconCls() {
@@ -57,14 +80,6 @@ public class MenuTree {
         this.iconCls = iconCls;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getState() {
         return state;
     }
@@ -73,11 +88,5 @@ public class MenuTree {
         this.state = state;
     }
 
-    public Attributes getAttributes() {
-        return attributes;
-    }
 
-    public void setAttributes(Attributes attributes) {
-        this.attributes = attributes;
-    }
 }

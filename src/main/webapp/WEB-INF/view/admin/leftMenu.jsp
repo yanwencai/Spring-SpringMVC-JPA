@@ -10,22 +10,18 @@
 <head>
     <title></title>
     <script>
-       $(function () {
-           $('#tree1').tree({
-               url:'getLefMenuTree'
-           });
-       });
+
     </script>
 </head>
 <body>
-<div id="aa" class="easyui-accordion" style="width:auto;height:auto;">
-    <div title="人员管理" data-options="iconCls:'icon-save'" style="overflow:auto;">
+<div id="aa" class="easyui-accordion" >
+    <div title="人员管理" data-options="iconCls:'icon-save'" >
         <ul id="tree1">
 
         </ul>
 
     </div>
-    <div title="资源管理" data-options="iconCls:'icon-reload',selected:true" style="padding:10px;">
+    <div title="资源管理" data-options="iconCls:'icon-reload'" >
         content2
     </div>
     <div title="角色管理" data-options="">
@@ -35,4 +31,5 @@
 
 
 </body>
+
 </html>

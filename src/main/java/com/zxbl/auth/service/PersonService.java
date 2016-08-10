@@ -15,7 +15,9 @@ public class PersonService {
     @Resource
     private IAuthPerson iAuthPerson;
     public List<Person> getByUsernameAfter(String username){
-        return this.iAuthPerson.getByUsernameAfter(username);
+        return this.iAuthPerson.getByUserNameAfter(username);
     }
-
+    public List<Person> getAll(){
+        return this.iAuthPerson.getAll();
+    }
 }
