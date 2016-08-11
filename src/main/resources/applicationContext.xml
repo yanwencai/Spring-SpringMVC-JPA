@@ -74,7 +74,7 @@
 
     </bean>
 
-    <!-- 3.事物 -->
+    <!-- 3.事务 -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
@@ -110,11 +110,13 @@
         </tx:attributes>
     </tx:advice>
 
-    <!-- aop事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!-- aop事务
     <aop:config>
-        <aop:pointcut id="transactionPointcut" expression="execution(* com.*.service.*.*(..))"/>
+        <aop:pointcut id="transactionPointcut" expression="execution(* com.zxbl.auth.service.*.*(..))"/>
         <aop:advisor advice-ref="transactionAdvice" pointcut-ref="transactionPointcut"/>
-    </aop:config>
+    </aop:config>-->
+
 
 
     <!-- 4.dao 或者说repository扫描配置 -->

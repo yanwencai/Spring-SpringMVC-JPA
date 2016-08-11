@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="../resources/easyUI/themes/icon.css">
     <script type="text/javascript" src="../resources/easyUI/jquery.min.js"></script>
     <script type="text/javascript" src="../resources/easyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../resources/easyUI/locale/easyui-lang-zh_CN.js"></script>
 
 
 </head>

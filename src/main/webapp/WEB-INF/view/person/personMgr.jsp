@@ -14,6 +14,7 @@
 <table id="dg"></table>
 
 <script>
+    var edit=null;
     $('#dg').datagrid({
         url:'getAllPerson',
         toolbar:"#tb",
@@ -21,61 +22,86 @@
         rownumbers:true,
         pageList:[10,20,30,40,50,100],
         singleSelect:true,
+
         idField:'id',
         columns:[[
             {field:'id',title:'id',width:100,hidden:true},
             {field:'realName',title:'realName',width:100,editor:'text'},
             {field:'workNumber',title:'workNumber',width:100,editor:'text'},
             {field:'age',title:'age',width:100,align:'right',editor:'text'},
-            {field:'sex',title:'sex',width:100,editor:'text'},
+            {field:'sex',title:'sex',width:100,editor:'text',formatter:function (value,row,index) {
+                if (value ==1){
+                    return "男";
+                }else if (value ==2){
+                    return "女";
+                }
+            }},
             {field:'userName',title:'userName',width:100,editor:'text'},
             {field:'email',title:'email',width:100,editor:'text'},
-            {field:'createTime',title:'createTime',width:100,editor:'datebox'},
-            {field:'action',title:'Action',width:80,align:'center',
-                formatter:function(value,row,index){
-                    if (row.editing){
-                        var s = '<a href="#" onclick="saverow(this)">Save</a> ';
-                        var c = '<a href="#" onclick="cancelrow(this)">Cancel</a>';
-                        return s+c;
-                    } else {
-                        var e = '<a href="#" onclick="editrow(this)">Edit</a> ';
-                        var d = '<a href="#" onclick="deleterow(this)">Delete</a>';
-                        return e+d;
-                    }
-                }
-            }
+            {field:'createTime',title:'createTime',width:120,editor:'datebox',formatter:function (value,row,index) {
+               // pattern = "yyyy-MM-dd hh:mm:ss";
+                var date = new Date(value);
+                return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+                //return new Date
+
+
+            }},
+
 
         ]],
-        onBeforeEdit:function(index,row){
-            row.editing = true;
-            updateActions(index);
+        //双击行，让行进入编辑状态，其他行不能进入编辑状态
+        onDblClickRow:function (rowIndex, rowData) {
+            $("#save").show();
+            if (edit==null){
+                edit = rowIndex;
+                $("#dg").datagrid('beginEdit',rowIndex);
+            }
         },
-        onAfterEdit:function(index,row){
-            row.editing = false;
-            updateActions(index);
-        },
-        onCancelEdit:function(index,row){
-            row.editing = false;
-            updateActions(index);
+        onAfterEdit:function (rowIndex, rowData, changes) {
+            console.log("rowData"+rowData.age);
+            $.ajax({
+                type:"POST",
+                url:"updatePerson",
+               // dataType:"json",
+                data:rowData,
+
+                success:function (data) {
+                   $.messager.show({
+                       title:"提示",
+                       msg:data.msg,
+                       showType:'slide',
+                       timeout:2000,
+                       style:{
+                           right:'',
+                           top:document.body.scrollTop+document.documentElement.scrollTop,
+                           bottom:''
+                       }
+                   });
+                   $("#save").hide();
+                }
+            })
+
+           /* var param={"rowData":rowData,"changes":changes};
+            $.post("updatePerson",param,function (data) {
+                
+            });*/
+            console.dir(rowData)
+            console.log(changes);
         }
 
 
     });
-    function updateActions(index){
-        $('#dg').datagrid('updateRow',{
-            index: index,
-            row:{}
-        });
-    }
-    function getRowIndex(target){
-        var tr = $(target).closest('tr.datagrid-row');
-        return parseInt(tr.attr('datagrid-row-index'));
-    }
-    function editrow(target){
-        $('#dg').datagrid('beginEdit', getRowIndex(target));
-    }
-    function saverow(target){
-        $('#dg').datagrid('endEdit', getRowIndex(target));
+
+    obj = {
+        //保存按钮
+        save:function () {
+            $("#dg").datagrid('endEdit',edit);//结束编辑，会触发onAfterEdit
+            edit=null;
+
+        },
+        add:function () {
+            $("#win").window("open");
+        }
     }
 
 
@@ -99,12 +125,28 @@
     </thead>
 </table>--%>
 <div id="tb">
-    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:alert('Add')">Add</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="javascript:alert('Cut')">Cut</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="modify()">修改</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="obj.add();">Add</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="modify()">修改</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:alert('remove')">remove</a>
+    <a href="#" id="save" style="display: none;" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="obj.save();">save</a>
 </div>
 
+<div id="win" class="easyui-window" title="My Window" style="width:600px;height:400px;"
+     data-options="iconCls:'icon-save',modal:true,closed:true">
+    <form id="ff" method="post">
+       <table style="margin-left:10px; height: 310px;">
+           <tr><td>realName:</td><td><input class="easyui-validatebox" type="text" name="realName" data-options="required:true" />  </td></tr>
+           <tr><td>workNumber:</td><td><input class="easyui-validatebox" type="text" name="workNumber" data-options="required:true" />  </td></tr>
+           <tr><td>age:</td><td><input class="easyui-validatebox" type="text" name="age" data-options="required:true" />  </td></tr>
+           <tr><td>sex:</td><td><input class="easyui-validatebox" type="text" name="sex" data-options="required:true" />  </td></tr>
+           <tr><td>userName:</td><td><input class="easyui-validatebox" type="text" name="userName" data-options="required:true" />  </td></tr>
+           <tr><td>password:</td><td><input class="easyui-validatebox" type="text" name="password" data-options="required:true" />  </td></tr>
+           <tr><td>email:</td><td><input class="easyui-validatebox" type="text" name="email" data-options="required:true,validType:'email'" />  </td></tr>
+           <tr><td>createTime:</td><td><input class="easyui-validatebox" type="text" name="createTime" data-options="required:true" />  </td></tr>
+       </table>
 
+    </form>
+</div>
 </body>
 
 
