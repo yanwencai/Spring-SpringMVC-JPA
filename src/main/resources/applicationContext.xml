@@ -12,7 +12,7 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
        ">
 
-
+    <context:component-scan base-package="com"/>
     <context:property-placeholder location="classpath:properties/jdbc.properties"/>
     <!-- 1.数据源 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter">
@@ -34,7 +34,7 @@
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
         </property>
         <!-- 自动扫描entity -->
-        <property name="packagesToScan" value="com.*"/>
+        <property name="packagesToScan" value="com.zxbl.auth.model"/>
         <property name="jpaProperties">
             <props>
                 <!--常见的还有 MySQL5Dialect、MySQL5InnoDBDialect、MySQL57InnoDBDialect、MySQLDialect、MySQLInnoDBDialect、MySQLMyISAMDialect-->
@@ -111,16 +111,16 @@
     </tx:advice>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
-    <!-- aop事务
+    <!-- aop事务-->
     <aop:config>
-        <aop:pointcut id="transactionPointcut" expression="execution(* com.zxbl.auth.service.*.*(..))"/>
-        <aop:advisor advice-ref="transactionAdvice" pointcut-ref="transactionPointcut"/>
-    </aop:config>-->
+        <aop:pointcut id="transactionPointcut" expression="execution(* com.zxbl.auth.dao.*.*(..))"/>
+        <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
+    </aop:config>
 
 
 
     <!-- 4.dao 或者说repository扫描配置 -->
     <!-- 首先引入jpa命名空间-->
-    <jpa:repositories base-package="com.*" entity-manager-factory-ref="entityManagerFactory" transaction-manager-ref="transactionManager"/>
+    <jpa:repositories base-package="com.zxbl.auth.dao" entity-manager-factory-ref="entityManagerFactory" transaction-manager-ref="transactionManager"/>
 
 </beans>

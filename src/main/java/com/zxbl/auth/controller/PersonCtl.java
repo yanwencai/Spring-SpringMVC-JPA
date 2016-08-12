@@ -3,8 +3,12 @@ package com.zxbl.auth.controller;
 
 
 
-import com.zxbl.auth.dao.IAuthPerson;
+import com.sun.org.apache.xerces.internal.dom.PSVIAttrNSImpl;
 import com.zxbl.auth.model.Person;
+import com.zxbl.auth.model.tree.PageInfo;
+import com.zxbl.auth.service.PersonService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +21,8 @@ import javax.enterprise.inject.Model;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
 import java.util.List;
@@ -30,7 +36,7 @@ public class PersonCtl {
 
 
     @Resource
-    private IAuthPerson iAuthPerson;
+    private PersonService personService;
 
     @RequestMapping("admin/toMainPage")
     public java.lang.String toMainPage(){
@@ -49,9 +55,18 @@ public class PersonCtl {
 
     @ResponseBody
     @RequestMapping("admin/getAllPerson")
-    public Object getAllPerson(){
-        List<Person> all = this.iAuthPerson.getAll();
-        return all;
+    public Object getAllPerson(int page,int rows){
+        /*List<Person> all = this.iAuthPerson.getAll();
+        this.iAuthPerson.findAll();
+        */
+        /*int pageSize=2;
+        int pageNo=3;*/
+        PageRequest pageRequest=new PageRequest(page-1,rows);
+        Page<Person> all = this.personService.findAll(pageRequest);
+        PageInfo pi=new PageInfo();
+        pi.setRows(all.getContent());
+        pi.setTotal(all.getTotalElements());
+        return pi;
     }
     @ResponseBody
     @RequestMapping("admin/updatePerson")
@@ -78,15 +93,25 @@ public class PersonCtl {
                     p.setAge(Integer.parseInt(attr[1]));
                 }else if(attr[0].toString().equals("sex")){
                     p.setSex(Integer.parseInt(attr[1]));
+                }else if(attr[0].toString().equals("createTime")){
+                    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    try {
+                        Date parse = sdf.parse(attr[1]);
+                        p.setCreateTime(parse);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
 
         }
         p.setUpdateTime(new Date());
-        this.iAuthPerson.updateById(p.getWorkNumber(),p.getUserName(),p.getPassword(),p.getRealName(),p.getEmail(),p.getAge(),p.getSex(),p.getUpdateTime(),p.getId());
+        this.personService.updateById(p.getWorkNumber(),p.getUserName(),p.getPassword(),p.getRealName(),p.getEmail(),p.getAge(),p.getSex(),p.getUpdateTime(),p.getCreateTime(),p.getId());
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("msg","操作成功！");
         return map;
     }
+
 
 }

@@ -2,6 +2,8 @@ package com.zxbl.auth.service;
 
 import com.zxbl.auth.dao.IAuthPerson;
 import com.zxbl.auth.model.Person;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +25,13 @@ public class PersonService {
         return this.iAuthPerson.getAll();
     }
 
+    public Page<Person> findAll(Pageable pageable){
+        return this.iAuthPerson.findAll(pageable);
+    }
 
-    public void updateById(int workNumber, String userName, String password, String realName, String email, int age, int sex, Date updateTime, int id){
-        this.iAuthPerson.updateById(workNumber,userName,password,realName,email,age,sex,updateTime,id);
+
+    public void updateById(int workNumber, String userName, String password, String realName, String email, int age, int sex, Date updateTime,Date createTime, int id){
+        this.iAuthPerson.updateById(workNumber,userName,password,realName,email,age,sex,updateTime,createTime,id);
     }
 
 }

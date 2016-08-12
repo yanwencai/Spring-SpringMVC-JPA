@@ -13,14 +13,38 @@
 <body>
 <table id="dg"></table>
 
-<script>
+<script>//扩展 dateTimeBox
+$.extend($.fn.datagrid.defaults.editors, {
+    datetimebox : {
+        init: function(container, options){
+            var input = $('<input type="text">').appendTo(container);
+            options.editable = false;
+            input.datetimebox(options);
+            return input;
+        },
+        getValue: function(target){
+            return $(target).datetimebox('getValue');
+        },
+        setValue: function(target, value){
+            $(target).datetimebox('setValue', value);
+        },
+        resize: function(target, width){
+            $(target).datetimebox('resize', width);
+        },
+        destroy : function (target) {
+            $(target).datetimebox('destroy');
+        },
+    }
+});
     var edit=null;
     $('#dg').datagrid({
         url:'getAllPerson',
         toolbar:"#tb",
         pagination:true,
         rownumbers:true,
-        pageList:[10,20,30,40,50,100],
+        pageSize:10,
+        pageList:[10,20,30,50,100],
+        //pageList:[10,20,30,40,50,100],
         singleSelect:true,
 
         idField:'id',
@@ -37,18 +61,19 @@
                 }
             }},
             {field:'userName',title:'userName',width:100,editor:'text'},
-            {field:'email',title:'email',width:100,editor:'text'},
-            {field:'createTime',title:'createTime',width:120,editor:'datebox',formatter:function (value,row,index) {
-               // pattern = "yyyy-MM-dd hh:mm:ss";
+            {field:'email',title:'email',width:150,editor:'text'},
+            {field:'createTime',title:'createTime',width:120,editor: {
+                type : 'datetimebox',
+                options : {
+                    required : true,
+                },
+            },formatter:function (value,row,index) {
                 var date = new Date(value);
                 return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-                //return new Date
-
-
             }},
-
-
         ]],
+
+
         //双击行，让行进入编辑状态，其他行不能进入编辑状态
         onDblClickRow:function (rowIndex, rowData) {
             $("#save").show();
@@ -81,13 +106,9 @@
                 }
             })
 
-           /* var param={"rowData":rowData,"changes":changes};
-            $.post("updatePerson",param,function (data) {
-                
-            });*/
-            console.dir(rowData)
-            console.log(changes);
-        }
+
+        },
+
 
 
     });
@@ -143,6 +164,8 @@
            <tr><td>password:</td><td><input class="easyui-validatebox" type="text" name="password" data-options="required:true" />  </td></tr>
            <tr><td>email:</td><td><input class="easyui-validatebox" type="text" name="email" data-options="required:true,validType:'email'" />  </td></tr>
            <tr><td>createTime:</td><td><input class="easyui-validatebox" type="text" name="createTime" data-options="required:true" />  </td></tr>
+           <tr><td colspan="2"><a id="btn" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+           </td></tr>
        </table>
 
     </form>
