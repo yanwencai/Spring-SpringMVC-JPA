@@ -113,7 +113,7 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <!-- aop事务-->
     <aop:config>
-        <aop:pointcut id="transactionPointcut" expression="execution(* com.zxbl.auth.dao.*.*(..))"/>
+        <aop:pointcut id="transactionPointcut" expression="execution(* com.zxbl.auth.service.*.*(..))"/>
         <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
     </aop:config>
 

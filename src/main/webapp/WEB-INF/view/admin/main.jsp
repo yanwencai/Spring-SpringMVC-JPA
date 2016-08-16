@@ -11,7 +11,7 @@
     <title>Title</title>
 
 
-    <link rel="stylesheet" type="text/css" href="../resources/easyUI/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../resources/easyUI/themes/bootstrap/easyui.css">
     <link rel="stylesheet" type="text/css" href="../resources/easyUI/themes/icon.css">
     <script type="text/javascript" src="../resources/easyUI/jquery.min.js"></script>
     <script type="text/javascript" src="../resources/easyUI/jquery.easyui.min.js"></script>
@@ -31,7 +31,7 @@
     <div  class="easyui-panel" data-options="region:'center'" style="padding:1px;background:#eee;height: 500px;" >
         <div id="tt" class="easyui-tabs" >
             <div title="Tab1" data-options="border:false" style="padding:20px;height:500px;">
-                tab1adasdsa
+                tab 欢迎页
             </div>
 
         </div>

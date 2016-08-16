@@ -3,21 +3,25 @@ package com.zxbl.auth.controller;
 
 
 
-import com.sun.org.apache.xerces.internal.dom.PSVIAttrNSImpl;
+
 import com.zxbl.auth.model.Person;
 import com.zxbl.auth.model.tree.PageInfo;
 import com.zxbl.auth.service.PersonService;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
 
 import javax.annotation.Resource;
 import javax.enterprise.inject.Model;
+import javax.persistence.criteria.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -32,7 +36,6 @@ import java.util.List;
  */
 @Controller
 public class PersonCtl {
-
 
 
     @Resource
@@ -55,14 +58,30 @@ public class PersonCtl {
 
     @ResponseBody
     @RequestMapping("admin/getAllPerson")
-    public Object getAllPerson(int page,int rows){
-        /*List<Person> all = this.iAuthPerson.getAll();
-        this.iAuthPerson.findAll();
-        */
-        /*int pageSize=2;
-        int pageNo=3;*/
+    public Object getAllPerson(HttpServletRequest request, int page, int rows){
+        final String realName = request.getParameter("realName");
+        final String workNumber2 = request.getParameter("workNumber");
         PageRequest pageRequest=new PageRequest(page-1,rows);
-        Page<Person> all = this.personService.findAll(pageRequest);
+
+        Specification specification=new Specification() {
+            public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder cb) {
+                List<Predicate> predicateList=new ArrayList<Predicate>();
+                if(realName!=null && !"".equals(realName)){
+                    Path realName1 = root.get("realName");
+                    Predicate rl =cb.and(cb.like(realName1, "%"+realName+"%"));
+                    predicateList.add(rl);
+                }
+                if(workNumber2!=null && !"".equals(workNumber2)){
+                    Path workNumber1 = root.get("workNumber");
+                    Predicate r2 = cb.and(cb.equal(workNumber1,workNumber2));
+                    predicateList.add(r2);
+                }
+                Predicate[] predicates = new Predicate[predicateList.size()];
+                return query.where(predicateList.toArray(predicates)).getRestriction();
+            }
+        };
+       // Page<Person> all = this.personService.findAll(pageRequest);
+        Page<Person> all = this.personService.findByCondition(specification, pageRequest);
         PageInfo pi=new PageInfo();
         pi.setRows(all.getContent());
         pi.setTotal(all.getTotalElements());
@@ -97,7 +116,7 @@ public class PersonCtl {
                     SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     try {
                         Date parse = sdf.parse(attr[1]);
-                        p.setCreateTime(parse);
+                      //  p.setCreateTime(parse);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -107,11 +126,32 @@ public class PersonCtl {
 
         }
         p.setUpdateTime(new Date());
-        this.personService.updateById(p.getWorkNumber(),p.getUserName(),p.getPassword(),p.getRealName(),p.getEmail(),p.getAge(),p.getSex(),p.getUpdateTime(),p.getCreateTime(),p.getId());
+       // this.personService.updateById(p.getWorkNumber(),p.getUserName(),p.getPassword(),p.getRealName(),p.getEmail(),p.getAge(),p.getSex(),p.getUpdateTime(),p.getCreateTime(),p.getId());
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("msg","操作成功！");
         return map;
     }
 
+    @ResponseBody
+    @RequestMapping("admin/modifyPerson")
+    public Object modifyPerson(Person p){
+        System.out.println(p);
+        this.personService.updateById(p.getWorkNumber(),p.getUserName(),p.getPassword(),p.getRealName(),p.getEmail(),p.getAge(),p.getSex(),p.getUpdateTime(),p.getCreateTime(),p.getId());
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("msg","操作成功！");
+        return map;
+    }
+
+
+    @ResponseBody
+    @RequestMapping("admin/addPerson")
+    public Object addPerson(Person p){
+        System.out.println(p);
+        this.personService.saveAndFlush(p);
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("msg","操作成功！");
+        return map;
+    }
 
 }

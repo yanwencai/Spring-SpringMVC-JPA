@@ -24,6 +24,7 @@ public class MenuTree {
     private int id;
     private int level;//级别 一级菜单还是二级等等
     private int parentId;//父级菜单id
+    private String url;//加载页面的url
     private String text;
     private String state;
     private String iconCls;
@@ -88,5 +89,11 @@ public class MenuTree {
         this.state = state;
     }
 
+    public String getUrl() {
+        return url;
+    }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

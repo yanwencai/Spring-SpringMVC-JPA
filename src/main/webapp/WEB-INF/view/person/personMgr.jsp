@@ -40,17 +40,22 @@ $.extend($.fn.datagrid.defaults.editors, {
     $('#dg').datagrid({
         url:'getAllPerson',
         toolbar:"#tb",
+
         pagination:true,
         rownumbers:true,
         pageSize:10,
         pageList:[10,20,30,50,100],
         //pageList:[10,20,30,40,50,100],
         singleSelect:true,
-
+        striped:true,
         idField:'id',
         columns:[[
             {field:'id',title:'id',width:100,hidden:true},
-            {field:'realName',title:'realName',width:100,editor:'text'},
+            {field:'realName',title:'realName',width:100,editor:{type:'text',
+                options:{
+                required:true,
+                }
+            }},
             {field:'workNumber',title:'workNumber',width:100,editor:'text'},
             {field:'age',title:'age',width:100,align:'right',editor:'text'},
             {field:'sex',title:'sex',width:100,editor:'text',formatter:function (value,row,index) {
@@ -67,11 +72,14 @@ $.extend($.fn.datagrid.defaults.editors, {
                 options : {
                     required : true,
                 },
-            },formatter:function (value,row,index) {
+            },
+               /* formatter:function (value,row,index) {
                 var date = new Date(value);
                 return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-            }},
+            }*/
+            },
         ]],
+
 
 
         //双击行，让行进入编辑状态，其他行不能进入编辑状态
@@ -116,16 +124,79 @@ $.extend($.fn.datagrid.defaults.editors, {
     obj = {
         //保存按钮
         save:function () {
+            alert("save");
             $("#dg").datagrid('endEdit',edit);//结束编辑，会触发onAfterEdit
             edit=null;
 
         },
         add:function () {
-            $("#win").window("open");
+            $("#addPerson").form('clear');//清除表单数据
+            $("#addwin").window("open");
+        },
+        search:function () {
+          $('#dg').datagrid('load',{
+              realName:$("#sRealName").val(),
+              workNumber:$("#sWorkNumber").val(),
+          });
+        },
+        modify:function () {
+            var person=$("#dg").datagrid('getSelected');
+            console.log(person.id)
+            if (person!=null&&person!=""){
+                for (name in person){
+                    console.log(name+":"+person[name])
+                    if (name =='sex'){
+                        console.log("aaaa--"+name+":"+person[name])
+                        $("#selectSex").combobox('select',person[name]);
+                        //$('#selectSex option[value='+person[name]+']').attr('selected','selected');
+                      //  console.log($('#selectSex option[value='+person[name]+']').attr('selected','selected'))
+                    }else if (name == 'createTime'){
+                        $("#createTime").datetimebox({
+                            value:person[name],
+                        });
+                    }else{
+                        $("input[name="+name+"]").removeClass('validatebox-invalid');//取消验证框的红色提示
+                        $("input[name="+name+"]").val(person[name])
+                    }
+                }
+                $("#win").window("open");
+            }
         }
     }
 
 
+    function modifySubmit() {
+      $("#modifyPerson").form('submit',{
+          url:'modifyPerson',
+          onSubmit:function () {
+              var isValid=$(this).form('validate');
+              return isValid;
+          },
+          success:function (data) {
+              $("#dg").datagrid('reload')
+              var data=eval('(' + data + ')');
+              $("#win").window("close");
+              $.messager.alert('提示',data.msg);
+          }
+      })
+    }
+
+    function addSubmit() {
+        $("#addPerson").form('submit',{
+            url:'addPerson',
+            onSubmit:function () {
+                return $(this).form("validate");
+            },
+            success:function (data) {
+                $("#dg").datagrid('reload')
+                var data=eval('('+data+')');
+                $("#addwin").window('close');
+                $.messager.alert("提示",data.msg);
+
+
+            }
+        });
+    }
 </script>
 <%--
 <table id="dg" class="easyui-datagrid" style="height:250px"
@@ -147,26 +218,71 @@ $.extend($.fn.datagrid.defaults.editors, {
 </table>--%>
 <div id="tb">
     <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="obj.add();">Add</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="modify()">修改</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="obj.modify();">修改</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:alert('remove')">remove</a>
     <a href="#" id="save" style="display: none;" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="obj.save();">save</a>
+    <br/>
+    <form autocomplete="off">
+    realName：<input type="text" id="sRealName" name="realName"> workNumber：<input type="text" id="sWorkNumber" name="workNumber">
+        <input type="button" onclick="obj.search();" value="搜索">
+    </form>
 </div>
 
-<div id="win" class="easyui-window" title="My Window" style="width:600px;height:400px;"
+<!-- 修改 -->
+<div id="win" class="easyui-window" title="修改人员信息" style="width:600px;height:400px;"
      data-options="iconCls:'icon-save',modal:true,closed:true">
-    <form id="ff" method="post">
+    <form id="modifyPerson" method="post">
        <table style="margin-left:10px; height: 310px;">
+           <tr><td>id:</td><td><input class="easyui-validatebox" type="text" name="id" data-options="required:true" />  </td></tr>
            <tr><td>realName:</td><td><input class="easyui-validatebox" type="text" name="realName" data-options="required:true" />  </td></tr>
            <tr><td>workNumber:</td><td><input class="easyui-validatebox" type="text" name="workNumber" data-options="required:true" />  </td></tr>
            <tr><td>age:</td><td><input class="easyui-validatebox" type="text" name="age" data-options="required:true" />  </td></tr>
-           <tr><td>sex:</td><td><input class="easyui-validatebox" type="text" name="sex" data-options="required:true" />  </td></tr>
+
+           <tr><td>sex:</td><td>
+               <select id="selectSex" name="sex" class="easyui-combobox" data-options="required:true" style="width: 100px;">
+                   <option value=""></option>
+                   <option value="1">男</option>
+                   <option value="2">女</option>
+               </select>
+            <%--   <input class="easyui-validatebox" type="text" name="sex" data-options="required:true" /> --%> </td></tr>
+
            <tr><td>userName:</td><td><input class="easyui-validatebox" type="text" name="userName" data-options="required:true" />  </td></tr>
            <tr><td>password:</td><td><input class="easyui-validatebox" type="text" name="password" data-options="required:true" />  </td></tr>
            <tr><td>email:</td><td><input class="easyui-validatebox" type="text" name="email" data-options="required:true,validType:'email'" />  </td></tr>
-           <tr><td>createTime:</td><td><input class="easyui-validatebox" type="text" name="createTime" data-options="required:true" />  </td></tr>
-           <tr><td colspan="2"><a id="btn" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+           <tr><td>createTime:</td><td><input id="createTime" class="easyui-datetimebox" type="text" name="createTime" data-options="required:true" />  </td></tr>
+           <tr><td colspan="2">
+               <a id="btn" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="modifySubmit();">保存</a>
+               <a id="btn" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="JavaScript:$('#win').window('close')">关闭</a>
            </td></tr>
        </table>
+
+    </form>
+</div>
+
+<!-- 新增 -->
+<div id="addwin" class="easyui-window" title="add　person" style="width:600px;height:400px;"
+     data-options="iconCls:'icon-save',modal:true,closed:true">
+    <form id="addPerson" method="post">
+        <table style="margin-left:10px; height: 310px;">
+            <tr><td>realName:</td><td><input class="easyui-validatebox" type="text" name="realName" data-options="required:true" />  </td></tr>
+            <tr><td>workNumber:</td><td><input class="easyui-validatebox" type="text" name="workNumber" data-options="required:true" />  </td></tr>
+            <tr><td>age:</td><td><input class="easyui-validatebox" type="text" name="age" data-options="required:true" />  </td></tr>
+            <tr><td>sex:</td><td>
+                <select  name="sex" class="easyui-combobox" data-options="required:true" style="width: 100px;">
+                    <option value=""></option>
+                    <option value="1">男</option>
+                    <option value="2">女</option>
+                </select>
+                 </td></tr>
+
+
+            <tr><td>userName:</td><td><input class="easyui-validatebox" type="text" name="userName" data-options="required:true" />  </td></tr>
+            <tr><td>password:</td><td><input class="easyui-validatebox" type="text" name="password" data-options="required:true" />  </td></tr>
+            <tr><td>email:</td><td><input class="easyui-validatebox" type="text" name="email" data-options="required:true,validType:'email'" />  </td></tr>
+            <tr><td>createTime:</td><td><input class="easyui-datetimebox" type="text" name="createTime" data-options="required:true" />  </td></tr>
+            <tr><td colspan="2"><a id="btn" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="addSubmit();">保存</a>
+            </td></tr>
+        </table>
 
     </form>
 </div>

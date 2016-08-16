@@ -1,10 +1,15 @@
 package com.zxbl.auth.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -22,7 +27,9 @@ public class Person {
     private String email;
     private int age;
     private int sex;
-    private Date createTime;
+
+    private String createTime;
+
     private Date updateTime;
 
     @Id
@@ -44,12 +51,22 @@ public class Person {
         this.age = age;
     }
 
-    public Date getCreateTime() {
+    /*@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+       public Date getCreateTime() {
+           return createTime;
+       }
+
+       public void setCreateTime(Date createTime) {
+           this.createTime = createTime;
+       }*/
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateTime(String createTime) throws ParseException {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date parse = sdf.parse(createTime);
+        this.createTime = sdf.format(parse);
     }
 
     public String getEmail() {

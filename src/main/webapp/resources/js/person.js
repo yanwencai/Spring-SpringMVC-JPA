@@ -11,14 +11,16 @@ $(function () {
         url: 'getLefMenuTree',
         onClick: function (node) {
             var isExist = $("#tt").tabs("exists", node.text)
-            if (node.level != null && node.level != "" && isExist == false) {
+          console.log(node)
+            if (node.level != null && node.level != "" && isExist == false&&node.url!=null&&node.url!="") {
                 $('#tt').tabs('add', {
-                    border: false,
                     title: node.text,
+                    fit:false,
                     //content: 'Tab Body',
                     href: "personMgr",
                     closable: true,
-                    fit: false,
+                   // border:false,
+
 
                 });
             }
