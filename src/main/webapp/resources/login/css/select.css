@@ -1,0 +1,82 @@
+@charset "utf-8";
+/************************************************************************
+*************************************************************************
+@Name :       	Selectyze - jQuery Plugin CSS
+@Revison :    	1.0
+@Date : 		19/12/2011
+@Author:     	Mickael SURREL - ALPIXEL Agency - (www.myjqueryplugins.com - www.alpixel.fr) 
+@License :		 Open Source - MIT License : http://www.opensource.org/licenses/mit-license.php
+ 
+**************************************************************************
+*************************************************************************/
+
+/***************************/
+/** Common to every theme **/
+/***************************/
+.DivSelectyze {	position:relative; z-index:9}
+
+.DivSelectyze .selectyzeValue {	position:relative;	z-index:10;	display:block;	outline:none;	text-decoration:none;}
+
+.DivSelectyze ul {list-style:none;}
+
+.DivSelectyze .UlSelectize {position:absolute;	z-index:20;	display:none;}
+
+.DivSelectyze li a {display:block;text-decoration:none;}
+
+.optgroupTitle {display:block;}
+
+/*******************************/
+/** END COMMON TO EVERY THEME **/
+/*******************************/
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+/*----------------------------------
+ You can add your own theme below !!
+ To add your theme, be sure to have 5 CSS elements :
+ 
+ .your_theme .selectyzeValue {} 		-> Appearance of your select element
+ .your_theme .UlSelectize {} 			-> Appearance of the dropdown list
+ .your_theme li a {} 					-> Appearance of the items into the dropdown list
+ .your_theme li a:hover {} 				-> items on hover
+ .your_theme .optgroupTitle {} 			-> Appearance of the optgroup label !! only if you have <optgroup> element into your list 
+ 
+ 
+ that's all ! \o/
+----------------------------------*/
+
+	/****************/
+	/** blue THEME **/
+	/****************/
+.selectTyp {}
+.blue {float:left;padding-left:5px;	width:5px *+height:1%; margin-right:4px;}
+
+.blue:after {content:".";display:block;height:0;clear:both;visibility:hidden}
+
+.blue .selectyzeValue {font-size:12px;line-height:22px;text-align:left;width:auto;height:auto;float:left;white-space:nowrap;padding-right:30px;}
+
+.blue .UlSelectize {top:26px;left:0px;width:100%;}
+
+.blue li a {font-size:12px;line-height:20px;background-color:transparent;color:#444;text-align:center;}
+
+.blue li a:hover{color:#666;}
+
+.blue .optgroupTitle {margin-top:15px;font-size:17px;font-style:italic;	padding-left:10px;background-color:#3e3d3d;	color:#444;	font-weight:700	}
+
+.selFixW_1 a.selectyzeValue { width:100px;}
+
+.selFixW_1 .UlSelectize { width:100%;}
+
+.blue{float:left; border:1px solid #b5cdd3;  border-right:0px;}
+.blue .selectyzeValue{background:url(../images/icon_a.gif) no-repeat right center; height:22px; border-right:1px solid #b5cdd3; background-color:#fff; font:12px/22px 'Simsun',Arial; color:#444; }
+.blue .UlSelectize{float:left;border:none;border-top:none;padding:0px;}
+.blue li a {text-align:left;border-bottom:0px dashed #C4D0D4; padding:0 0 0 5px; }
+.blue .UlSelectize{background:#d9f7ff; top:22px; padding:6px 0;  }
+
+	
+	
+	
+	
+	
+	
+	
+	

@@ -1,0 +1,78 @@
+@charset "utf-8";
+html,body{width:100%;height:100%;}
+.m966{width:966px;margin:0 auto;}
+.l_logo { background:url(../images/bj/logo12.png) no-repeat 40px 74px;height:132px;}
+.l_contwarp{background:#00b1c3 url(../images/img/l_cont_bj.jpg) no-repeat center 0;}
+.l_cont {background:url(../images/bj/cont_bj.png) no-repeat center 0;}
+.l_cont_in {height:421px;width:966px;margin:0 auto;}
+.l_footer { text-align:center;background:url(../images/bj/l_footer_bj.jpg) repeat-x 0 0;color:#777;}
+.login_box { background:url(../images/bj/l_cont_yy.png) no-repeat 0 0;height:100px;width:564px; right:-58px;top:322px;}
+
+.login_box_in, .login_box_cont { background-image:url(../images/bj/l_cont_block.png); background-repeat:no-repeat;width:444px;}
+.login_box_in { background-position:0 0;padding-top:24px;right:0;top:92px;}
+.login_box_cont { background-position:100% 100%;height:260px;}
+
+.dl_sty { text-align:left;padding:0 60px;}
+.dl_sty dd {padding:8px 0;clear:both; overflow:hidden; zoom:1;}
+.dl_sty dd label, .dl_sty dd input, a.yzm {float:left;}
+.dl_sty dd label {width:60px;color:#444; line-height:24px;}
+.ipt_sty {font:14px/24px Tahoma;color:#7a7a7a;border-style:solid; border-color:#828282 #d5d5d5 #d5d5d5 #828282; border-width:1px;height:24px;padding:0 5px;} 
+
+a.yzm {margin-left:10px;}
+.h2_sty { background:url(../images/bj/h2_sty.png) no-repeat 58px center;height:40px;margin-bottom:20px;}
+.btn_submit { background:url(../images/bj/l_sub_bj.png) no-repeat 0 0 transparent; width:108px;height:40px;border:none; cursor:pointer;margin-left:56px;}
+
+.l_topbar { background:url(../images/bj/topbar_bj.png) repeat-x 0 0;height:36px;line-height:36px;color:#b0d8f1;}
+.em_sty {color:#5fe3ff;margin:0 5px;}
+.btn_getout { display:inline-block;background:url(../images/bj/btn_getout.png) no-repeat 0 -2px;height:40px;width:70px; text-align:center;color:#bfe6ff;}
+.copy{font:12px/24px "Simsun";color:#1e444f; bottom:20px;left:50%;margin-left:-110px;}
+.copy i {font:12px/24px "Tahoma";color:#1e444f;margin-right:5px;}
+
+.dl_sty1 {padding-left:30px;}
+.dl_sty1 dd {float:left;width:282px;margin-right:30px;padding-bottom:15px;}
+.icoa {display:block;width:112px;height:104px;margin:0 auto;}
+
+.lout1 , .lout2, .lout3 {background-image:url(../images/bj/lout_bj.png); background-repeat:no-repeat;height:150px;}  
+.lout1 { background-position:center 0;}
+.lout2 { background-position:50% -300px;}
+.lout3 , .lout3 a{ cursor:text;}
+
+.ico1, .ico2, .ico3, .ico4, .ico5, .ico6 {display:block;height:104px;}
+.ico1 { background:url(../images/img/ico_1.png) no-repeat center 0;}
+.ico2 { background:url(../images/img/ico_2.png) no-repeat center 0;}
+.ico3 { background:url(../images/img/ico_3.png) no-repeat center 0;}
+.ico4 { background:url(../images/img/ico_4.png) no-repeat center 0;}
+.ico5 { background:url(../images/img/ico_5.png) no-repeat center 0;}
+.ico6 { background:url(../images/img/ico_6.png) no-repeat center 0;}
+
+
+.a1, .a2, .a3, .a4, .a5, .a6{background-repeat:no-repeat;display:block;height:30px;margin-top:-6px;background-position:50% 0;}
+.a1 { background-image:url(../images/bj/lis_a1.png); }
+.a2 { background-image:url(../images/bj/lis_a2.png);}
+.a3 { background-image:url(../images/bj/lis_a3.png);}
+.a4 { background-image:url(../images/bj/lis_a4.png);}
+.a5 { background-image:url(../images/bj/lis_a5.png);}
+.a6 { background-image:url(../images/bj/lis_a6.png);}
+.lout2 a { background-position:50% -50px;}
+.h2_sty1 { background:url(../images/bj/logo1.png) no-repeat center center;height:46px;margin:90px auto 60px;}
+
+.igray1 { background:url(../images/img/igray1.png) no-repeat 0 0;}
+.igray2 { background:url(../images/img/igray2.png) no-repeat 0 0;}
+.igray3 { background:url(../images/img/igray3.png) no-repeat 0 0;}
+.igray4 { background:url(../images/img/igray4.png) no-repeat 0 0;}
+.igray5 { background:url(../images/img/igray5.png) no-repeat 0 0;}
+.igray6 { background:url(../images/img/igray6.png) no-repeat 0 0;}
+
+.agray1 {background:url(../images/bj/agray1.png) no-repeat 50% 0;}
+.agray2 {background:url(../images/bj/agray2.png) no-repeat 50% 0;}
+.agray3 {background:url(../images/bj/agray3.png) no-repeat 50% 0;}
+.agray4 {background:url(../images/bj/agray4.png) no-repeat 50% 0;}
+.agray5 {background:url(../images/bj/agray5.png) no-repeat 50% 0;}
+.agray6 {background:url(../images/bj/agray6.png) no-repeat 50% 0;}
+
+.pt_25 {padding-top:25px;}
+.pb_10 {padding-bottom:10px;}
+
+
+.w230 {width:230px;}
+.w150 {width:150px;}

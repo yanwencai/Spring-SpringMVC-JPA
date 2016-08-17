@@ -1,0 +1,24 @@
+@charset "utf-8";
+.mainwrap{padding:10px;margin:0 auto;}
+.wrap1 {float:left;}
+.dd_styl1 {padding:0 10px 15px 0;}
+.dd_styl1 dd {display:none;}
+
+.tit_l1, .tit_r1 { background-image:url(../images/bj/ryj_bj.png); background-repeat:no-repeat;height:30px;font:14px/30px "Microsoft Yahei";color:#333;}
+.tit_l1 { background-position: 0 0;padding-left:10px;}
+.tit_r1 { background-position:100% 100%;padding-right:10px;}
+
+.tab_h1, .tab_h2, .tab_h3, .tab_h4, .tab_h5 {position:relative;top:10px;font:600 12px/20px "Simsun";color:#fff;}
+.tab_h1 li, .tab_h2 li, .tab_h3 li, .tab_h4 li, .tab_h5 li {float:left;width:42px;height:20px; text-align:center;line-height:20px;color:#fff; cursor:pointer;}
+.tab_h1 li.cur, .tab_h2 li.cur, .tab_h3 li.cur, .tab_h4 li.cur, .tab_h5 li.cur { background:url(../images/bj/tab_h1_li_bj.png) no-repeat 0 0;color:#23a2c2;}
+
+.emsty1 {color:#fff;font-weight:bold;}
+
+.bor_sty1 { border:solid 1px #d4d4d4;border-top:none;}
+
+.ul_sty1 {margin:0 5px; background-color:#fff;}
+.ul_sty1 li {border-bottom:dashed 1px #9badb2;padding:3px; line-height:25px;}
+.ul_sty1 li.lastn {border-bottom:none;}
+
+.more1 {font:12px/24px "Simsun";color:#24698d;display:block;width:46px;height:25px; background:url(../images/bj/more_inf_bj.png) no-repeat 0 0;text-align:center;}
+.more2 {font:12px/18px "Simsun";color:#fff;display:block;width:46px;height:18px; background:url(../images/bj/more2.png) no-repeat 0 0;text-align:center;}

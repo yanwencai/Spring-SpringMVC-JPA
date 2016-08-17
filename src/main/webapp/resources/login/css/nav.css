@@ -1,0 +1,41 @@
+@charset "utf-8";
+a { text-decoration:none;}
+#LeftWrap { background:#d7e0e2; font:14px/18px "Microsoft Yahei";color:#333; }
+.lv1Link { display:block; color:#fff;height:33px; background:url(../images/bj/cur1.png) repeat-x 0 0; padding-left:32px;overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.left-lv-1-wrap {}
+.left-lv-1-wrap h2.cur .lv1Link{background:url(../images/bj/ico_cur1.png) 10px center no-repeat; }
+.left-lv-1-title { background:0 0 repeat-x;}
+.lv1-r { background:right top no-repeat; cursor:pointer; }
+.left-lv-1-title, .lv1-r { background-image:url(../images/bj/cur1.png); height:33px; line-height:33px;font-size:15px;}
+
+.left-lv-1-dWrap { display:none}
+.lv-1-dw-l { background: left bottom no-repeat; padding-left:6px;}
+.lv-1-dw-r { background:right top no-repeat; padding-right:6px;}
+.lv-1-dw-l, .lv-1-dw-r { background-image:url(../images/Green/le_2bg_top.gif); height:6px; font-size:0; line-height:0; overflow:hidden}
+
+.lv-1-dw-c { background:#fff;}
+
+.lv-1-dw-lb { background: left bottom no-repeat; padding-left:6px;}
+.lv-1-dw-rb { background:right top no-repeat; padding-right:6px;}
+.lv-1-dw-lb, 
+.lv-1-dw-rb { background-image:url(../images/Green/le_2bg_botm.gif); height:6px; font-size:0; line-height:0; overflow:hidden}
+
+
+.left-lv-2-dWrap { display:none; background-color:#f4fafd;padding:4px 0;}
+.left-lv-2-title {background:url(../images/bj/cur2.png) repeat-x 0 0; font-size:15px; }
+.left-lv-3-dWrap { display:none}
+.left-lv-3-title {height:32px; line-height:32px; color:#003b70; background-image:url(../images/bj/cur3.png); background-repeat:no-repeat;background-position:0 0;}
+
+
+.lv2-t {  background:url(../images/bj/ico_cur2.png) no-repeat 0 -60px; padding-left:30px; height:33px; line-height:33px; display:block; color:#004f79;font-weight:bold; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; _width:83%; text-decoration:none; }
+.left-lv-2-title .cur {background:url(../images/bj/ico_cur2.png) no-repeat 0 0;}
+
+.lv3_t{display:block;color:#444;padding-left:34px; background-position:0 0;height:32px; line-height:32px;cursor:pointer;overflow:hidden;text-overflow:ellipsis; white-space:nowrap; text-decoration:none;}
+.left-lv-3-wrap .cur {  background-position:0 -60px; background-image:url(../images/bj/cur3.png); background-repeat:no-repeat; border-top:solid 1px #cadee7;border-bottom:solid 1px #cadee7;}
+.left-lv-3-wrap .cur a {color:#006995;}
+
+.level-4 { padding-left:58px; display:block; height:26px; line-height:26px; background:url(../images/Green/arow-6.gif) no-repeat 40px center; color:#fff;overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.left-lv-4-dWrap { display:none}
+.left-lv4-wrap a.cur {background:url(../images/Green/arow-6.gif) no-repeat 40px center; color:#8ccaff;}
+
+.lv4_t {font:12px/24px "Simsun";padding-left:50px; background:url(../images/bj/lis_a5.png) no-repeat 40px center; color:#444; text-decoration:none;}

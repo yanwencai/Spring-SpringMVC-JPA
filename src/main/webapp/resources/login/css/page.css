@@ -1,0 +1,9 @@
+@charset "utf-8";
+.page_box { text-align:center;padding-top:10px;}
+.page_box a {display:inline-block; text-align:center;margin:0 3px;}
+.page_box a.past, .page_box a.next { background:url(../images/bj/fpage_bj2.png) no-repeat 0 0;width:66px;height:27px;line-height:26px;}
+.page_box a.past:hover, .page_box a.next:hover { background-position:100% 100%;color:#fff;}
+.page_box a.past {margin-right:10px;}
+.page_box a.next {margin-left:10px;}
+.page_box a.num {background:url(../images/bj/fpage_bj1.png) no-repeat 0 0;width:25px;height:25px;line-height:24px;}
+.page_box a.num:hover, .page_box a.cur{ background-position:100% 100%;color:#fff;}

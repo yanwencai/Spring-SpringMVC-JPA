@@ -1,0 +1,33 @@
+@charset "utf-8";
+.px_50 {padding:0 50px;}
+.pr_10 {padding-right:10px;}
+.w204 {width:204px;}
+
+.allbj{ position:absolute; z-index:-10px;left:0;top:0;}
+.out_page {position:relative; z-index:10;}
+.out_page, .allbj, .allbj img {height:100%;width:100%;}
+.ihea { background:url(../images/bj/index_top.png) repeat-x 0 0;height:70px;}
+.ilogo { background:url(../images/bj/index_logo.png) no-repeat 10px  center;height:70px;width:280px;}
+
+.btnfh , .btntc {font:14px/60px "Microsoft Yahei"; float:right;padding-left:24px;margin-left:24px;color:#c5f2ff;}
+.btnfh { background:url(../images/img/ico_fh.png) no-repeat 0 center;}
+.btntc { background:url(../images/img/ico_tc.png) no-repeat 0 center;}
+
+.pa_wrap {padding:10px;}
+.wtit_l, .wtit_r { background-image:url(../images/bj/tit_bj.png); background-repeat:no-repeat;height:35px;line-height:34px; float:right}
+.wtit_l { background-position:0 0;padding-left:5px;_margin-right:-3px; float:left}
+.wtit_r {background-position:100% 100%;padding-right:5px;_margin-left:0;}
+.wcont_l, .wcont_r { background-image:url(../images/bj/wcont_bj.png); background-repeat:repeat-y;}
+.wcont_l { background-position:0 0;padding-left:5px;_margin-right:-3px;}
+.wcont_r {background-position:100% 0;padding-right:5px; height:1px;_margin-left:0;}
+.wfot_l, .wfot_r { background-image:url(../images/bj/wfot_bj.png); _background-image:url(../images/bj/wfot_bj1.png); background-repeat:no-repeat;height:18px;}
+.wfot_l { background-position:0 0;padding-left:5px; _margin-right:-3px;}
+.wfot_r {background-position:100% 100%;padding-right:5px;_margin-left:0;}
+
+.ico_uh, .ico_sy {padding-left:40px;display:block;heigth:30px; margin-top:4px;font:600 14px/30px "Microsoft Yahei";}
+.ico_uh { background:url(../images/img/ico_uh.gif) no-repeat 15px center;color:#1285b5;}
+.ico_sy { background:url(../images/img/ico_sy.gif) no-repeat 15px center;color:#151d2a;}
+
+.cdemo, .leftnav {height:100%; _height:400px }
+
+
