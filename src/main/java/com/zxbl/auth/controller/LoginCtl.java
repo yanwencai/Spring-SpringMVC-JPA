@@ -6,6 +6,7 @@ import com.zxbl.auth.service.PersonService;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +34,7 @@ private static Logger logger= (Logger) LoggerFactory.getLogger(LoginCtl.class);
             return "admin/main";
         }
 
-        return "index.jsp";
+       response.sendRedirect("index.jsp");
+        return null;
     }
 }

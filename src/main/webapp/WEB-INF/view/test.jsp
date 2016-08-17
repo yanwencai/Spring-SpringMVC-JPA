@@ -26,8 +26,7 @@
             <li>
                 <span>root</span>
                 <ul>
-                    <li>
-                        <span>人员管理</span>
+                    <li><span>人员管理</span>
                         <ul>
                             <li>
                                 <span><a href="#">人员登记</a></span>
