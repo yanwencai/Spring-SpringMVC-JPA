@@ -8,7 +8,7 @@ $(function () {
     });
 
     $('#tree1').tree({
-        url: 'getLefMenuTree',
+        url: 'admin/getLefMenuTree',
         onClick: function (node) {
             var isExist = $("#tt").tabs("exists", node.text)
           console.log(node)
@@ -17,7 +17,7 @@ $(function () {
                     title: node.text,
                     fit:false,
                     //content: 'Tab Body',
-                    href: "personMgr",
+                    href: node.url,
                     closable: true,
                    // border:false,
 

@@ -7,9 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-
-</head>
 <body>
 <table id="dg"></table>
 
@@ -38,9 +35,8 @@ $.extend($.fn.datagrid.defaults.editors, {
 });
     var edit=null;
     $('#dg').datagrid({
-        url:'getAllPerson',
+        url:'admin/getAllPerson',
         toolbar:"#tb",
-
         pagination:true,
         rownumbers:true,
         pageSize:10,
@@ -73,31 +69,23 @@ $.extend($.fn.datagrid.defaults.editors, {
                     required : true,
                 },
             },
-               /* formatter:function (value,row,index) {
-                var date = new Date(value);
-                return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
-            }*/
             },
         ]],
 
-
-
         //双击行，让行进入编辑状态，其他行不能进入编辑状态
-        onDblClickRow:function (rowIndex, rowData) {
+        /*onDblClickRow:function (rowIndex, rowData) {
             $("#save").show();
             if (edit==null){
                 edit = rowIndex;
                 $("#dg").datagrid('beginEdit',rowIndex);
             }
-        },
+        },*/
         onAfterEdit:function (rowIndex, rowData, changes) {
             console.log("rowData"+rowData.age);
             $.ajax({
                 type:"POST",
-                url:"updatePerson",
-               // dataType:"json",
+                url:"admin/updatePerson",
                 data:rowData,
-
                 success:function (data) {
                    $.messager.show({
                        title:"提示",
@@ -141,7 +129,7 @@ $.extend($.fn.datagrid.defaults.editors, {
         },
         modify:function () {
             var person=$("#dg").datagrid('getSelected');
-            console.log(person.id)
+            console.log(person)
             if (person!=null&&person!=""){
                 for (name in person){
                     console.log(name+":"+person[name])
@@ -160,14 +148,31 @@ $.extend($.fn.datagrid.defaults.editors, {
                     }
                 }
                 $("#win").window("open");
+            }else{
+                $.messager.alert("警告","请选择一行","warning");
             }
+        },
+        checkUsername:function (input) {
+            var param={"userName":input.value};
+            $.post("admin/checkUsername",param,function (data) {
+                $("#checkUserName").validatebox({
+                    invalidMessage:data.msg,
+                    validate:function () {
+                        alert("validate");
+                    }
+                });
+
+            });
+
+            //alert(input.value);
         }
     }
 
 
+
     function modifySubmit() {
       $("#modifyPerson").form('submit',{
-          url:'modifyPerson',
+          url:'admin/modifyPerson',
           onSubmit:function () {
               var isValid=$(this).form('validate');
               return isValid;
@@ -176,14 +181,14 @@ $.extend($.fn.datagrid.defaults.editors, {
               $("#dg").datagrid('reload')
               var data=eval('(' + data + ')');
               $("#win").window("close");
-              $.messager.alert('提示',data.msg);
+              $.messager.alert('提示',data.msg,"info");
           }
       })
     }
 
     function addSubmit() {
         $("#addPerson").form('submit',{
-            url:'addPerson',
+            url:'admin/addPerson',
             onSubmit:function () {
                 return $(this).form("validate");
             },
@@ -192,30 +197,11 @@ $.extend($.fn.datagrid.defaults.editors, {
                 var data=eval('('+data+')');
                 $("#addwin").window('close');
                 $.messager.alert("提示",data.msg);
-
-
             }
         });
     }
 </script>
-<%--
-<table id="dg" class="easyui-datagrid" style="height:250px"
-       data-options="url:'getAllPerson',fitColumns:true,singleSelect:true"
-       iconCls="icon-save" title="person" rownumbers="true" pagination="true"
-       toolbar="#tb" >
-    <thead>
-    <tr>
-       <th data-options="field:'id',width:100">id</th>
-        <th data-options="field:'age',width:100">age</th>
-        <th data-options="field:'email',width:100,align:'right'">email</th>
 
-        <th data-options="field:'realName',width:100">realName</th>
-        <th data-options="field:'sex',width:100">sex</th>
-        <th data-options="field:'userName',width:100">userName</th>
-        <th data-options="field:'workNumber',width:100">workNumber</th>
-    </tr>
-    </thead>
-</table>--%>
 <div id="tb">
     <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="obj.add();">Add</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="obj.modify();">修改</a>
@@ -231,7 +217,7 @@ $.extend($.fn.datagrid.defaults.editors, {
 <!-- 修改 -->
 <div id="win" class="easyui-window" title="修改人员信息" style="width:600px;height:400px;"
      data-options="iconCls:'icon-save',modal:true,closed:true">
-    <form id="modifyPerson" method="post">
+    <form id="modifyPerson" method="post" autocomplete="off">
        <table style="margin-left:10px; height: 310px;">
            <tr><td>id:</td><td><input class="easyui-validatebox" type="text" name="id" data-options="required:true" />  </td></tr>
            <tr><td>realName:</td><td><input class="easyui-validatebox" type="text" name="realName" data-options="required:true" />  </td></tr>
@@ -251,8 +237,8 @@ $.extend($.fn.datagrid.defaults.editors, {
            <tr><td>email:</td><td><input class="easyui-validatebox" type="text" name="email" data-options="required:true,validType:'email'" />  </td></tr>
            <tr><td>createTime:</td><td><input id="createTime" class="easyui-datetimebox" type="text" name="createTime" data-options="required:true" />  </td></tr>
            <tr><td colspan="2">
-               <a id="btn" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="modifySubmit();">保存</a>
-               <a id="btn" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="JavaScript:$('#win').window('close')">关闭</a>
+               <a id="btn2" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="modifySubmit();">保存</a>
+               <a id="btn1" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="JavaScript:$('#win').window('close')">关闭</a>
            </td></tr>
        </table>
 
@@ -260,9 +246,9 @@ $.extend($.fn.datagrid.defaults.editors, {
 </div>
 
 <!-- 新增 -->
-<div id="addwin" class="easyui-window" title="add　person" style="width:600px;height:400px;"
+<div id="addwin" class="easyui-window" title="添加人员信息" style="width:600px;height:400px;"
      data-options="iconCls:'icon-save',modal:true,closed:true">
-    <form id="addPerson" method="post">
+    <form id="addPerson" method="post" autocomplete="off">
         <table style="margin-left:10px; height: 310px;">
             <tr><td>realName:</td><td><input class="easyui-validatebox" type="text" name="realName" data-options="required:true" />  </td></tr>
             <tr><td>workNumber:</td><td><input class="easyui-validatebox" type="text" name="workNumber" data-options="required:true" />  </td></tr>
@@ -276,7 +262,8 @@ $.extend($.fn.datagrid.defaults.editors, {
                  </td></tr>
 
 
-            <tr><td>userName:</td><td><input class="easyui-validatebox" type="text" name="userName" data-options="required:true" />  </td></tr>
+            <%--<tr><td>userName:</td><td><input id="checkUserName" class="easyui-validatebox" type="text" name="userName" data-options="required:true" onblur="obj.checkUsername(this);"/>  </td></tr>--%>
+            <tr><td>userName:</td><td><input id="checkUserName" class="easyui-validatebox" type="text" name="userName" data-options="required:true" validtype="remote['admin/checkUserName','userName']" invalidMessage="用户名已存在"/>  </td></tr>
             <tr><td>password:</td><td><input class="easyui-validatebox" type="text" name="password" data-options="required:true" />  </td></tr>
             <tr><td>email:</td><td><input class="easyui-validatebox" type="text" name="email" data-options="required:true,validType:'email'" />  </td></tr>
             <tr><td>createTime:</td><td><input class="easyui-datetimebox" type="text" name="createTime" data-options="required:true" />  </td></tr>

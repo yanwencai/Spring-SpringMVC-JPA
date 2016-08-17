@@ -20,8 +20,8 @@ public class PersonService {
     @Resource
     private IAuthPerson iAuthPerson;
 
-    public List<Person> getByUsernameAfter(String username){
-        return this.iAuthPerson.getByUserNameAfter(username);
+    public List<Person> getByUserName(String username){
+        return this.iAuthPerson.getByUserName(username);
     }
     public List<Person> getAll(){
         return this.iAuthPerson.getAll();
@@ -48,6 +48,11 @@ public class PersonService {
 
     public Person saveAndFlush(Person person){
         return this.iAuthPerson.saveAndFlush(person);
+    }
+
+
+    public List<Person> getByUserNameAndPassword(String userName,String password){
+        return this.iAuthPerson.getByUserNameAndPassword(userName,password);
     }
 
 }

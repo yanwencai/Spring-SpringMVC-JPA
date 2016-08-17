@@ -23,7 +23,9 @@ import java.util.List;
 
 public interface IAuthPerson extends PagingAndSortingRepository<Person,Integer>,JpaRepository<Person,Integer>,JpaSpecificationExecutor<Person> {
 
-    public List<Person> getByUserNameAfter(String userName);
+    public List<Person> getByUserName(String userName);
+
+    public List<Person> getByUserNameAndPassword(String userName,String password);
 
     @Query("select p from Person p")
     public List<Person> getAll();

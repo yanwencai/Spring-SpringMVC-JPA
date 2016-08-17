@@ -52,7 +52,8 @@ public class PersonCtl {
     }
 
     @RequestMapping("admin/personMgr")
-    public java.lang.String personMgr(){
+    public java.lang.String personMgr(HttpServletRequest request){
+        //Person user = (Person) request.getSession().getAttribute("user");
         return "person/personMgr";
     }
 
@@ -152,6 +153,20 @@ public class PersonCtl {
         Map<String,Object> map=new HashMap<String, Object>();
         map.put("msg","操作成功！");
         return map;
+    }
+
+
+    @ResponseBody
+    @RequestMapping("admin/checkUserName")
+    public Object checkUsername(String userName){
+        Map<String,Object> map=new HashMap<String, Object>();
+        List<Person> user = this.personService.getByUserName(userName);
+        if(user!=null&&user.size()>0){
+            map.put("msg","用户名：“"+userName+"”已存在，请更换！");
+            return "false";
+        }
+        return "true";
+        //return map;
     }
 
 }
