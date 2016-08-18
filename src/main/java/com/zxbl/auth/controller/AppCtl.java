@@ -2,10 +2,7 @@ package com.zxbl.auth.controller;
 
 import com.zxbl.auth.model.AppResources;
 import com.zxbl.auth.model.tree.VAppResources;
-import com.zxbl.auth.model.tree.VMenuTree;
 import com.zxbl.auth.service.AppResourcesService;
-import org.apache.taglibs.standard.tag.el.fmt.RequestEncodingTag;
-import org.hibernate.type.UUIDBinaryType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -39,12 +36,12 @@ public class AppCtl {
     @Resource
     private AppResourcesService appResourcesService;
 
+
     @RequestMapping("admin/appMgr")
     public String appMgr(){
         logger.info("跳转到appMgr.jsp页面");
         return "app/appMgr";
     }
-
 
     @ResponseBody
     @RequestMapping("admin/addApp")
@@ -65,7 +62,7 @@ public class AppCtl {
 
     /**
      * 随着应用和菜单的增加，推荐使用需要加载的方式，不要一次全部加载
-     * @param pid
+     * @param
      * @return
      */
     @ResponseBody
