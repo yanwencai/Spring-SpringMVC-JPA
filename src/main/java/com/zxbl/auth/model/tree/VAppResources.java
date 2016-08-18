@@ -1,17 +1,11 @@
-package com.zxbl.auth.model;
+package com.zxbl.auth.model.tree;
 
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.List;
 
 /**
- * Created by Administrator on 2016/8/17.
+ * Created by Administrator on 2016/8/18.
  */
-@Entity
-@Table(name = "tb_auth_app_resources")
-public class AppResources {
+public class VAppResources {
 
     private Integer id;
     private Integer level;//级别 一级菜单还是二级等等
@@ -24,14 +18,8 @@ public class AppResources {
     private String checked;
     private String createTime;
     private String updateTime;
+    private List Children;
 
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
 
     public String getChecked() {
         return checked;
@@ -39,6 +27,14 @@ public class AppResources {
 
     public void setChecked(String checked) {
         this.checked = checked;
+    }
+
+    public List getChildren() {
+        return Children;
+    }
+
+    public void setChildren(List children) {
+        Children = children;
     }
 
     public String getCreateTime() {
@@ -57,8 +53,6 @@ public class AppResources {
         this.iconCls = iconCls;
     }
 
-    @Id
-    @GeneratedValue
     public Integer getId() {
         return id;
     }
@@ -73,6 +67,14 @@ public class AppResources {
 
     public void setLevel(Integer level) {
         this.level = level;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     public Integer getParentId() {

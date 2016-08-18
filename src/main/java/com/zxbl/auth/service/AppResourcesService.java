@@ -20,8 +20,8 @@ public class AppResourcesService {
         return this.appResourcesDao.save(appResources);
     }
 
-    public List<AppResources> getByParentIdOOrderByOrderIdDesc(int pid){
-        return this.appResourcesDao.getByParentIdOOrderByOrderIdDesc(pid);
+    public List<AppResources> getByParentIdOrderByOrderIdAsc(int pid){
+        return this.appResourcesDao.getByParentIdOrderByOrderIdAsc(pid);
     }
 
 }

@@ -17,7 +17,10 @@
 
     app={
         addApp:function() {
-            $("#addAppForm").show();
+            $("#addAppForm").form('clear').show();
+            //设置level为
+            $("input[name=level]").val(0);
+            $("input[name=parentId]").val(0);
         },
         //1.添加应用信息
         //2.刷新左侧tree
@@ -25,10 +28,8 @@
             if ($("#addAppForm").form('validate')){
                 $.post("admin/addApp",$("#addAppForm").serialize(),function (data) {
                     app.getAllApp();
-
-                    alert(data.msg);
-
-                })
+                    $.messager.alert("提示",data.msg,"info");
+                });
             }else{
                 $.messager.alert("警告","验证不通过!","warning");
             }
@@ -40,12 +41,36 @@
                 url:'admin/getAllApp'
             });
         },
-        modifyApp:function () {
-            var app=$("#apptree").tree('getSelected');
-            console.info(app)
-            if (app ==null){
+        //从顶级节点开始，并应用到tree控件
+        getAppByParentId:function () {
+          $("#apptree").tree({
+              url:'admin/getAppByParentId',
+          });
+        },
+        //添加子节点
+        addChildrenApp:function () {
+            var node=$("#apptree").tree('getSelected');
+            console.info(node)
+            if(node ==null){
                 $.messager.alert("警告","请选择一个节点","warning");
             }else{
+                $("#addAppForm").form('clear');
+                $("input[name=parentId]").val(node.id);
+
+            }
+
+        }
+
+
+    }
+
+
+    $(function () {
+        //app.getAllApp();
+       // app.getAppByParentId();
+        $("#apptree").tree({
+            url:'admin/getAppByParentId',
+            onClick:function (app) {
                 $("#addAppForm").show();
                 for(name in app){
                     if (name=='checked'){
@@ -60,14 +85,8 @@
 
                 }
             }
+        });
 
-        }
-
-    }
-
-
-    $(function () {
-        app.getAllApp();
     });
 </script>
 <div id="cc" class="easyui-layout" style="width: 100%; height: 95%;">
@@ -76,14 +95,14 @@
 
 
 
-        <ul id="apptree" class="easyui-tree"></ul>
+        <ul id="apptree"></ul>
 
     </div>
 
     <div data-options="region:'center'"  style="padding:5px;background:beige;">
         <div style="margin-bottom:5px">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加下級</a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="app.modifyApp();">修改</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="app.addChildrenApp();">添加下級</a>
+            <%--<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="app.modifyApp();">修改</a>--%>
             <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">刪除</a>
           <%--  <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true"></a>
             <a href="#" class="easyui-linkbutton" iconCls="icon-cut" plain="true"></a>--%>
@@ -96,13 +115,16 @@
 
 
 
-        <form id="addAppForm" method="post" style="display: none;">
+        <form id="addAppForm" method="post" style="display: none;" autocomplete="off">
             <table  style="line-height: 35px;">
-                id:<input type="text" name="id" />
+               <%-- id:<input type="text" name="id" />
                 createTime:<input type="text" name="createTime" />
-                level:<input type="text" name="level" />
-                parentId:<input type="text" name="parentId" />
 
+                --%>
+                   level:<input type="text" name="level" />
+                   parentId:<input type="text" name="parentId" />
+                   id:<input type="text" name="id" />
+                   createTime:<input type="text" name="createTime" />
                 <tr><td>text：</td><td><input class="easyui-validatebox" type="text" name="text" data-options="required:true" /></td></tr>
                 <tr><td>url：</td><td><input class="easyui-validatebox" type="text" name="url" data-options="required:true" /></td></tr>
                 <tr><td>orderId：</td><td><input class="easyui-validatebox" type="text" name="orderId" data-options="required:true" /></td></tr>
