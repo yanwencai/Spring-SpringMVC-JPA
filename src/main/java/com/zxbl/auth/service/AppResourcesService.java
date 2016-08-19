@@ -24,4 +24,10 @@ public class AppResourcesService {
         return this.appResourcesDao.getByParentIdOrderByOrderIdAsc(pid);
     }
 
+
+    public void delete(Integer id){
+        this.appResourcesDao.delete(id);
+    }
+
+
 }
