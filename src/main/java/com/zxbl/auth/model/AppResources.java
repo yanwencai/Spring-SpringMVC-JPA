@@ -21,7 +21,7 @@ public class AppResources {
     private String text;
     private String state;
     private String iconCls;
-    private String checked;
+    private boolean checked;
     private String createTime;
     private String updateTime;
 
@@ -33,11 +33,11 @@ public class AppResources {
         this.orderId = orderId;
     }
 
-    public String getChecked() {
+    public boolean getChecked() {
         return checked;
     }
 
-    public void setChecked(String checked) {
+    public void setChecked(boolean checked) {
         this.checked = checked;
     }
 

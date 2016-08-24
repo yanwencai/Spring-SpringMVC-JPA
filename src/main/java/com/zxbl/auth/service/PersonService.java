@@ -55,4 +55,7 @@ public class PersonService {
         return this.iAuthPerson.getByUserNameAndPassword(userName,password);
     }
 
+    public List<Person> getByIdInOrderByIdAsc(Integer[] ids){
+        return this.iAuthPerson.getByIdInOrderByIdAsc(ids);
+    }
 }

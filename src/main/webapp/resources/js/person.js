@@ -12,7 +12,9 @@ $(function () {
         onClick: function (node) {
             var isExist = $("#tt").tabs("exists", node.text)
           console.log(node)
-            if (node.level != null && node.level != "" && isExist == false&&node.url!=null&&node.url!="") {
+            if (isExist==true){
+                $("#tt").tabs("select", node.text)
+            }else if (node.level != null && node.level != "" && isExist == false&&node.url!=null&&node.url!="") {
                 $('#tt').tabs('add', {
                     title: node.text,
                     fit:false,
@@ -20,7 +22,6 @@ $(function () {
                     href: node.url,
                     closable: true,
                    // border:false,
-
 
                 });
             }

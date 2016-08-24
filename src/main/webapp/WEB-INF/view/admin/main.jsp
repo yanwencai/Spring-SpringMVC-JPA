@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>通用权限管理系统</title>
     <%@include file="/meta.jsp"%>
 
     <link rel="stylesheet" type="text/css" href="<%=basePath%>resources/easyUI/themes/bootstrap/easyui.css">

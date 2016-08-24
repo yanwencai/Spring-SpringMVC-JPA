@@ -15,17 +15,17 @@ public class VAppResources {
     private String text;
     private String state;
     private String iconCls;
-    private String checked;
+    private boolean checked;
     private String createTime;
     private String updateTime;
     private List Children;
 
 
-    public String getChecked() {
+    public boolean getChecked() {
         return checked;
     }
 
-    public void setChecked(String checked) {
+    public void setChecked(boolean checked) {
         this.checked = checked;
     }
 
