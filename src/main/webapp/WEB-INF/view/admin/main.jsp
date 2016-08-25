@@ -20,22 +20,37 @@
 
 </head>
 <body>
-<div id="cc" class="easyui-layout" style="width:100%;height:100%;">
+<div id="cc" class="easyui-layout" data-options="fit:true">
     <div data-options="region:'north',split:true" style="height:100px;background-color: #074286;"></div>
     <div data-options="region:'south',split:true" style="height:50px;"></div>
-    <%--<div data-options="region:'east',iconCls:'icon-reload',title:'East',split:true" style="width:100px;"></div>--%>
     <div data-options="region:'west',title:'导航',split:true" style="width:200px;">
        <jsp:include page="leftMenu.jsp"/>
     </div>
 
-    <div  class="easyui-panel" data-options="region:'center',border:false" style="padding:1px;background:#eee;height: 500px;" >
-        <div id="tt" class="easyui-tabs" >
-            <div title="欢迎页" data-options="border:false" style="padding:20px;height:500px;">
-                tab 欢迎页
+    <div  class="easyui-panel" data-options="region:'center',border:true" data-options="fit:true" style="padding:1px;background:#eee;" >
+        <div id="tt" class="easyui-tabs" data-options="fit:true">
+            <div title="readMe" data-options="border:true" >
+                <h1>系统说明</h1>
+                <h2>模块划分</h2>
+                <ul>
+                    <li>人员管理模块：维护人的基本信息</li>
+                    <li>资源管理模块：维护各应用系统的菜单资源</li>
+                    <li>角色管理模块：根据现实的组织结构划分角色，并将对应的资源授予角色，也可以把角色理解为群组，相同的角色（群组）具有相同的资源权限；用户授权就是把人加入到指定的角色。</li>
+                </ul>
             </div>
 
         </div>
     </div>
+
+
+
+  <%--  <div id="cc" class="easyui-layout" data-options="fit:true">
+        <div data-options="region:'north',title:'North Title',split:true" style="height:100px;"></div>
+        <div data-options="region:'south',title:'South Title',split:true" style="height:100px;"></div>
+        <div data-options="region:'west',title:'West',split:true" style="width:100px;"></div>
+        <div data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;"></div>
+    </div>--%>
+
 </body>
 
 

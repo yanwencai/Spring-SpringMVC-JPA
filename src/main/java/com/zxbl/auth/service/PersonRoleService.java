@@ -28,4 +28,7 @@ public class PersonRoleService {
         this.iPersonRoleDao.delByPersonId(ids);
     }
 
+    public List<PersonRole> getByPersonId(Integer personId){
+        return this.iPersonRoleDao.getByPersonId(personId);
+    }
 }

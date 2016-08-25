@@ -14,10 +14,10 @@ $(function () {
           console.log(node)
             if (isExist==true){
                 $("#tt").tabs("select", node.text)
-            }else if (node.level != null && node.level != "" && isExist == false&&node.url!=null&&node.url!="") {
+            }else if (node.level !=0 && node.level != "0" && isExist == false&&node.url!=null&&node.url!="") {
                 $('#tt').tabs('add', {
                     title: node.text,
-                    fit:false,
+                    fit:true,
                     //content: 'Tab Body',
                     href: node.url,
                     closable: true,

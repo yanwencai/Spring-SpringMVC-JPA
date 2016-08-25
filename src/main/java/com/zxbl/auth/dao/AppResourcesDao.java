@@ -10,6 +10,10 @@ import java.util.List;
  */
 public interface AppResourcesDao extends CrudRepository<AppResources,Integer> {
 
-    public List<AppResources> getByParentIdOrderByOrderIdAsc(int pid);
+    List<AppResources> getByParentIdOrderByOrderIdAsc(int pid);
+
+    AppResources getById(Integer id);
+
+    List<AppResources> getByIdIn(List ids);
 
 }

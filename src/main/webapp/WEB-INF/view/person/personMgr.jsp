@@ -37,6 +37,7 @@ $.extend($.fn.datagrid.defaults.editors, {
     $('#dg').datagrid({
         url:'admin/getAllPerson',
         toolbar:"#tb",
+        fit:true,
         pagination:true,
         rownumbers:true,
         pageSize:10,
@@ -235,7 +236,7 @@ $.extend($.fn.datagrid.defaults.editors, {
            <tr><td>userName:</td><td><input class="easyui-validatebox" type="text" name="userName" data-options="required:true" />  </td></tr>
            <tr><td>password:</td><td><input class="easyui-validatebox" type="text" name="password" data-options="required:true" />  </td></tr>
            <tr><td>email:</td><td><input class="easyui-validatebox" type="text" name="email" data-options="required:true,validType:'email'" />  </td></tr>
-           <tr><td>createTime:</td><td><input id="createTime" class="easyui-datetimebox" type="text" name="createTime" data-options="required:true" />  </td></tr>
+           <tr><td>createTime:</td><td><input id="createTime" class="easyui-datetimebox" editable="false" type="text" name="createTime" data-options="required:true" />  </td></tr>
            <tr><td colspan="2">
                <a id="btn2" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="modifySubmit();">保存</a>
                <a id="btn1" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="JavaScript:$('#win').window('close')">关闭</a>
@@ -266,7 +267,7 @@ $.extend($.fn.datagrid.defaults.editors, {
             <tr><td>userName:</td><td><input id="checkUserName" class="easyui-validatebox" type="text" name="userName" data-options="required:true" validtype="remote['admin/checkUserName','userName']" invalidMessage="用户名已存在"/>  </td></tr>
             <tr><td>password:</td><td><input class="easyui-validatebox" type="text" name="password" data-options="required:true" />  </td></tr>
             <tr><td>email:</td><td><input class="easyui-validatebox" type="text" name="email" data-options="required:true,validType:'email'" />  </td></tr>
-            <tr><td>createTime:</td><td><input class="easyui-datetimebox" type="text" name="createTime" data-options="required:true" />  </td></tr>
+            <tr><td>createTime:</td><td><input class="easyui-datetimebox" editable="false" type="text" name="createTime" data-options="required:true" />  </td></tr>
             <tr><td colspan="2"><a id="btn" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="addSubmit();">保存</a>
             </td></tr>
         </table>

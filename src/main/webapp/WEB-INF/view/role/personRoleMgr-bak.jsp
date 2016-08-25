@@ -11,24 +11,17 @@
     <title>personRoleMgr</title>
 </head>
 <body>
+<!-- 角色列表 -->
+    <div id="personRoleDataGrid"></div>
+<hr/>
 
-<div id="cc" class="easyui-layout" data-options="fit:true">
-   <div data-options="region:'north',title:'North Title',split:true" style="height:200px;">
-       <!-- 角色列表 -->
-       <div id="personRoleDataGrid"></div>
-   </div>
-    <%-- <div data-options="region:'south',title:'South Title',split:true" style="height:100px;"></div>--%>
-    <div data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;">
-        <!-- 用户列表 -->
-        <div id="personRoleUserDataGrid"></div>
-        <div id="personRoleTb" style="display: none;">
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="personRole.addPerson();">添加用户</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="personRole.removePerson();">移除用户</a>
-        </div>
 
-    </div>
+<!-- 用户列表 -->
+<div id="personRoleUserDataGrid"></div>
+<div id="personRoleTb" style="display: none;">
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="personRole.addPerson();">添加用户</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="personRole.removePerson();">移除用户</a>
 </div>
-
 
 
 <!-- 用户列表弹出框 -->
@@ -122,7 +115,6 @@
                 url: "admin/getPersonListByRoleId",
                 pagination: "true",
                 rownumbers: true,
-                fit:true,
                 fitColumns: true,
                 singleSelect: false,
                 queryParams: roleparam,
@@ -207,7 +199,6 @@
         url: "admin/getRole",
         idField: "id",
         pagination: "true",
-        fit:true,
         rownumbers: true,
         fitColumns: true,
         singleSelect: true,

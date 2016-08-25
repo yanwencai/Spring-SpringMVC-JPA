@@ -22,23 +22,33 @@ public class AppResources {
     private String state;
     private String iconCls;
     private boolean checked;
+    private String applicationCode;//应用系统代码
     private String createTime;
     private String updateTime;
 
-    public int getOrderId() {
-        return orderId;
+
+    public String getApplicationCode() {
+        return applicationCode;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setApplicationCode(String applicationCode) {
+        this.applicationCode = applicationCode;
     }
 
-    public boolean getChecked() {
+    public boolean isChecked() {
         return checked;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
     }
 
     public String getCreateTime() {

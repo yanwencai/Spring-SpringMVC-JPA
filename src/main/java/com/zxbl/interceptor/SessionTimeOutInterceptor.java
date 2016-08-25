@@ -27,7 +27,7 @@ public class SessionTimeOutInterceptor implements HandlerInterceptor {
             response.sendRedirect("/auth/index.jsp");
             return false;
         }else{
-            logger.info("当前登录用户："+user.getUserName()+","+user.getRealName());
+            logger.info("session超时检查：未超时，当前用户："+user.getUserName()+","+user.getRealName());
             return true;
         }
     }

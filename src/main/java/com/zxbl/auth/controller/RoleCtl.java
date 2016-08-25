@@ -179,13 +179,16 @@ public class RoleCtl {
         //保存之前删除老的记录
         this.roleAppService.delByRoleId(roleId);
         List<RoleApps> roleAppsList=new ArrayList<RoleApps>();
-        for(int i=0;i<idArray.length;i++){
-            RoleApps roleApps=new RoleApps();
-            roleApps.setRoleId(roleId);
-            roleApps.setAppId(idArray[i]);
-            roleAppsList.add(roleApps);
+        if(idArray!=null){
+            for(int i=0;i<idArray.length;i++){
+                RoleApps roleApps=new RoleApps();
+                roleApps.setRoleId(roleId);
+                roleApps.setAppId(idArray[i]);
+                roleAppsList.add(roleApps);
+            }
+            this.roleAppService.save(roleAppsList);
         }
-        this.roleAppService.save(roleAppsList);
+
         Map<String,Object> map=new HashMap<String, Object>();
         map.put("msg","操作成功");
         return map;

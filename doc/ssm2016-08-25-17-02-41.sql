@@ -63,8 +63,9 @@ CREATE TABLE `tb_auth_app_resources` (
   `text` varchar(255) DEFAULT NULL,
   `update_time` varchar(255) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
+  `application_code` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +74,7 @@ CREATE TABLE `tb_auth_app_resources` (
 
 LOCK TABLES `tb_auth_app_resources` WRITE;
 /*!40000 ALTER TABLE `tb_auth_app_resources` DISABLE KEYS */;
-INSERT INTO `tb_auth_app_resources` VALUES (3,'false','2016-08-18 10:03:42','',0,1,0,'closed','通用权限管理系统','2016-08-18 11:12:13','http://localhost:8081/auth/login'),(4,'false','2016-08-18 10:03:59','',0,2,0,'open','2222','2016-08-19 11:30:20','2222'),(5,'false','2016-08-18 10:04:39','',NULL,1,3,'closed','人员管理模块','2016-08-18 11:12:55','2222'),(6,'false','2016-08-18 10:07:38','',NULL,2,3,'closed','资源管理模块','2016-08-18 11:14:38','2222'),(7,'false','2016-08-18 10:20:01','',NULL,3,3,'closed','角色管理模块','2016-08-19 10:32:11','2222'),(9,'false','2016-08-18 11:00:57','',NULL,1,5,'closed','人员管理','2016-08-18 11:13:17','333'),(10,'true','2016-08-18 11:13:35','',NULL,2,5,'closed','人员统计',NULL,'2'),(11,'true','2016-08-18 11:14:10','',NULL,3,5,'closed','人员分析',NULL,'3'),(12,'true','2016-08-18 11:15:20','',NULL,1,6,'closed','应用管理',NULL,'1'),(13,'false','2016-08-18 11:21:13','',NULL,2,6,'closed','应用菜单管理',NULL,'2'),(14,'false','2016-08-19 10:33:02','',NULL,1,7,'closed','角色管理',NULL,'1'),(15,'false','2016-08-19 10:33:30','',NULL,2,7,'closed','角色授权',NULL,'2');
+INSERT INTO `tb_auth_app_resources` VALUES (22,'0','2016-08-24 17:22:17','',0,1,0,'closed','通用权限管理系统','2016-08-24 17:27:41','http://localhost:8081/auth/login','auth'),(23,'0','2016-08-24 17:26:57','',NULL,1,22,'closed','人员管理模块','2016-08-24 17:28:23','','auth'),(24,'0','2016-08-24 17:31:41','',NULL,1,23,'close','人员管理',NULL,'admin/personMgr','auth'),(25,'0','2016-08-24 17:32:19','',NULL,2,23,'close','人员统计',NULL,'','auth'),(26,'0','2016-08-24 17:32:38','',NULL,3,23,'close','人员分析',NULL,'','auth'),(27,'0','2016-08-24 17:33:01','',NULL,2,22,'closed','资源管理模块','2016-08-24 17:34:41','','auth'),(28,'0','2016-08-24 17:33:33','',NULL,1,27,'close','应用管理',NULL,'admin/appMgr','auth'),(29,'0','2016-08-24 17:39:02','',NULL,2,27,'close','应用菜单管理',NULL,'','auth'),(30,'0','2016-08-25 10:26:14','',NULL,3,22,'closed','权限管理模块','2016-08-25 10:38:11','','auth'),(31,'0','2016-08-25 10:37:23','',NULL,1,30,'open','角色管理',NULL,'admin/roleMgr','auth'),(32,'0','2016-08-25 10:38:00','',NULL,2,30,'open','用户授权',NULL,'admin/personRoleMgr','auth'),(33,'0','2016-08-25 16:58:31','',NULL,4,22,'open','系统管理','2016-08-25 16:58:45','','auth');
 /*!40000 ALTER TABLE `tb_auth_app_resources` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,7 +104,7 @@ CREATE TABLE `tb_auth_menutree` (
 
 LOCK TABLES `tb_auth_menutree` WRITE;
 /*!40000 ALTER TABLE `tb_auth_menutree` DISABLE KEYS */;
-INSERT INTO `tb_auth_menutree` VALUES (1,'false',NULL,'closed','人员管理模块',0,'0',NULL),(2,'false',NULL,'closed','资源管理模块',0,'0',NULL),(3,'false',NULL,'closed','角色管理模块',0,'0',NULL),(4,'false',NULL,'','人员管理',1,'1','admin/personMgr'),(5,'false',NULL,'','人员统计',1,'1',NULL),(6,'false',NULL,'','人员分析',1,'1',NULL),(7,'false',NULL,'','应用管理',1,'2','admin/appMgr'),(8,'false',NULL,'','应用菜单管理',1,'2',NULL),(9,'false',NULL,'','角色管理',1,'3',NULL),(10,'false',NULL,'','角色授权',1,'3',NULL);
+INSERT INTO `tb_auth_menutree` VALUES (1,'false',NULL,'closed','人员管理模块',0,'0',NULL),(2,'false',NULL,'closed','资源管理模块',0,'0',NULL),(3,'false',NULL,'closed','角色管理模块',0,'0',NULL),(4,'false',NULL,'','人员管理',1,'1','admin/personMgr'),(5,'false',NULL,'','人员统计',1,'1',NULL),(6,'false',NULL,'','人员分析',1,'1',NULL),(7,'false',NULL,'','应用管理',1,'2','admin/appMgr'),(8,'false',NULL,'','应用菜单管理',1,'2',NULL),(9,'false',NULL,'','角色管理',1,'3','admin/roleMgr'),(10,'false',NULL,'','用户授权',1,'3','admin/personRoleMgr');
 /*!40000 ALTER TABLE `tb_auth_menutree` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +127,7 @@ CREATE TABLE `tb_auth_person` (
   `user_name` varchar(255) DEFAULT NULL,
   `work_number` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,8 +136,84 @@ CREATE TABLE `tb_auth_person` (
 
 LOCK TABLES `tb_auth_person` WRITE;
 /*!40000 ALTER TABLE `tb_auth_person` DISABLE KEYS */;
-INSERT INTO `tb_auth_person` VALUES (1,35,'2016-08-15 15:46:51','zs@aa.com','qqq','王五',1,NULL,'wangwu',13),(2,30,'2016-08-15 10:24:40','zhangsan@aaaaaaaaa.com','aaa','张三12',2,NULL,'zhangsan',1),(3,22,'2016-08-15 10:24:50','zs@aa.com','aaa','李四',1,'2016-08-15 10:43:42','lisi',4),(4,45,'2016-08-15 09:58:59','zs@aa.com','aaa','刘德华',2,NULL,'zs',31),(5,22,'2016-08-10 14:42:35','zs@aa.com','aaa','德华qq',1,'2016-08-15 10:25:28','zs',13),(6,22,'2016-08-10 14:42:35','zs@aa.com','aaa','学友',1,'2016-08-12 10:47:54','zs',13),(7,22,'2016-08-10 14:42:35','zs@aa.com','aaa','张三7',1,NULL,'zs',13),(8,22,'2016-08-10 14:42:35','zs@aa.com','aaa','张三8',1,'2016-08-10 14:42:53','zs',13),(9,22,'2016-08-10 14:42:35','zs@aa.com','aaa','tttt',1,NULL,'zs',13),(10,22,'2016-08-10 14:42:35','zs@aa.com','aaa','张三10',1,'2016-08-10 14:42:53','zs',13),(11,22,'2016-08-10 14:42:35','zs@aa.com','aaa','张三11',1,'2016-08-10 14:42:53','zs',13),(12,45,'2016-08-15 10:24:40','aaaa@test.com','wls','王六四',1,NULL,'wls',20),(13,28,'2016-08-15 16:07:12','zhangliu@qq.com','zhangliu','张六',2,NULL,'zhangliu',27),(14,38,'2016-08-15 16:13:02','baoqiang@qq.com','baoqiang','宝强',1,NULL,'baoqiang',8),(15,3,'2016-08-15 16:16:34','7@qq.com','6','1',1,NULL,'5',2),(16,38,'2016-08-16 13:35:49','zhaoliu@126.com','zhaoliu','赵六',1,NULL,'zhaoliu',27),(17,100,'2016-08-16 15:35:10','zxf@yahoo.com','zxf','张三丰',1,NULL,'zxf',18),(18,3,'2016-08-17 09:17:53','2@qq.com','1','1',1,NULL,'zss',2);
+INSERT INTO `tb_auth_person` VALUES (19,18,'2016-08-24 16:37:53','zhangsan@qq.com','aaaaaa','张三',1,'2016-08-24 16:38:17','zhangsan',1),(20,28,'2016-08-24 16:39:32','lisi@163.com','aaaaaa','李四',1,NULL,'lisi',2),(21,0,'2016-08-25 16:40:27','admin@163.com','admin','管理员',1,NULL,'admin',0);
 /*!40000 ALTER TABLE `tb_auth_person` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_auth_person_role`
+--
+
+DROP TABLE IF EXISTS `tb_auth_person_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_auth_person_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `person_id` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_auth_person_role`
+--
+
+LOCK TABLES `tb_auth_person_role` WRITE;
+/*!40000 ALTER TABLE `tb_auth_person_role` DISABLE KEYS */;
+INSERT INTO `tb_auth_person_role` VALUES (69,21,7),(70,19,8),(71,20,9);
+/*!40000 ALTER TABLE `tb_auth_person_role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_auth_role`
+--
+
+DROP TABLE IF EXISTS `tb_auth_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_auth_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(255) DEFAULT NULL,
+  `role_code` varchar(50) DEFAULT NULL,
+  `description` varchar(2000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_auth_role`
+--
+
+LOCK TABLES `tb_auth_role` WRITE;
+/*!40000 ALTER TABLE `tb_auth_role` DISABLE KEYS */;
+INSERT INTO `tb_auth_role` VALUES (7,'系统管理员','admin','维护系统，拥有所有权限'),(8,'权限管理员','authadmin','负责分配权限'),(9,'用户管理','useradmin','管理用户模块');
+/*!40000 ALTER TABLE `tb_auth_role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_auth_role_apps`
+--
+
+DROP TABLE IF EXISTS `tb_auth_role_apps`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_auth_role_apps` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app_id` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_auth_role_apps`
+--
+
+LOCK TABLES `tb_auth_role_apps` WRITE;
+/*!40000 ALTER TABLE `tb_auth_role_apps` DISABLE KEYS */;
+INSERT INTO `tb_auth_role_apps` VALUES (70,30,8),(71,31,8),(72,32,8),(73,22,8),(74,24,9),(75,22,9),(76,23,9),(77,22,7),(78,23,7),(79,24,7),(80,25,7),(81,26,7),(82,27,7),(83,28,7),(84,29,7),(85,30,7),(86,31,7),(87,32,7),(88,33,7);
+/*!40000 ALTER TABLE `tb_auth_role_apps` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -148,4 +225,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-22 11:12:25
+-- Dump completed on 2016-08-25 17:02:46

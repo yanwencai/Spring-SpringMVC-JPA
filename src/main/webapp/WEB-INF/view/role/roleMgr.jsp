@@ -188,7 +188,10 @@
                         for (var i=0;i<data.length;i++){
                             var snode=$("#authMenuTree").tree('find',data[i].appId);
                             console.info(snode);
-                            $("#authMenuTree").tree('check',snode.target);
+                            if ($("#authMenuTree").tree('isLeaf',snode.target)){
+                                $("#authMenuTree").tree('check',snode.target);
+
+                            }
                         }
                     })
                 }
@@ -214,23 +217,21 @@
         //保存授权信息 1.获取所有选中的节点
         saveAuth:function () {
             var node = $("#roleDataGrid").datagrid('getSelected');
-
             var selected=$("#authMenuTree").tree('getChecked');
+            var nodes = $('#authMenuTree').tree('getChecked', 'indeterminate');
+            console.info(selected);
+            console.info(nodes);
             var idArray=new Array();
             for (var i=0;i<selected.length;i++){
-                var children=selected[i].children;
-                console.info(children.length)
-                if (children.length==0){
+                /*var children=selected[i].children;
+                if (children.length==0){*/
                     idArray.push(selected[i].id);
-                }
-                /*var isLeaf=$("#authMenuTree").tree('isLeaf',selected[i].target);
-                console.info(selected[i].text+":是否叶子节点："+isLeaf);
-                if (isLeaf==true){
-                    idArray.push(selected[i].id);
-                }*/
-
+             /*   }*/
             }
-            $.ajax({
+            for(var i=0;i<nodes.length;i++){
+                idArray.push(nodes[i].id);
+            }
+           $.ajax({
                 url:"admin/saveAuth",
                 type:'post',
                 data:{"idArray":idArray,"roleId":node.id},
@@ -251,6 +252,7 @@
     $("#roleDataGrid").datagrid({
         url: "admin/getRole",
         idField: "id",
+        fit:true,
         pagination: "true",
         rownumbers: true,
         fitColumns: true,

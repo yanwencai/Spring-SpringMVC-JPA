@@ -21,6 +21,7 @@
             //设置level为
             $("input[name=level]").val(0);
             $("input[name=parentId]").val(0);
+            $("#selectState").combobox('select','close');
         },
         //1.添加应用信息
         //2.刷新左侧tree
@@ -28,7 +29,7 @@
             if ($("#addAppForm").form('validate')){
                 $.post("admin/addApp",$("#addAppForm").serialize(),function (data) {
                     //app.getAllApp();
-                    app.getAppByParentId();
+                   // app.getAppByParentId();
                     $.messager.alert("提示",data.msg,"info");
                 });
             }else{
@@ -57,6 +58,8 @@
             }else{
                 $("#addAppForm").form('clear');
                 $("input[name=parentId]").val(node.id);
+                $("input[name=applicationCode]").val(node.applicationCode).removeClass("validatebox-invalid");
+                $("#selectState").combobox('select','close');
             }
         },
         removeApp:function () {
@@ -70,14 +73,17 @@
                     $.messager.alert("提示",data.msg,"info");
                 });
             }
+        },
+        reloadTree:function () {
+            app.getAllApp();
         }
+
 
 
     };
 
 
     $(function () {
-       // app.getAppByParentId();
         $("#apptree").tree({
             url:'admin/getAppByParentId',
             onClick:function (app) {
@@ -112,6 +118,7 @@
 <div id="cc" class="easyui-layout" style="width: 100%; height: 95%;">
     <div data-options="region:'west',split:true" style="width:200px;">
         <a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="app.addApp();">添加应用</a>
+        <a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="app.getAppByParentId();">刷新</a>
 
 
 
@@ -119,7 +126,7 @@
 
     </div>
 
-    <div data-options="region:'center'"  style="padding:5px;background:beige;">
+    <div data-options="region:'center',fit:true" class="easyui-panel"  style="padding:5px;background:beige;">
         <div style="margin-bottom:5px">
             <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="app.addChildrenApp();">添加下級</a>
             <%--<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="app.modifyApp();">修改</a>--%>
@@ -143,9 +150,10 @@
                   <input type="hidden" name="id" />
                    <input type="hidden" name="createTime" />
                 <tr><td>text：</td><td><input class="easyui-validatebox" type="text" name="text" data-options="required:true" /></td></tr>
-                <tr><td>url：</td><td><input class="easyui-validatebox" type="text" name="url" data-options="required:true" /></td></tr>
+                <tr><td>url：</td><td><input class="easyui-validatebox" type="text" name="url"  /></td></tr>
                 <tr><td>orderId：</td><td><input class="easyui-validatebox" type="text" name="orderId" data-options="required:true" /></td></tr>
-                <tr><td>checked：</td>
+                <tr><td>applicationCode：</td><td><input class="easyui-validatebox" type="text" name="applicationCode" data-options="required:true" title="系统代码，不能为空"/></td></tr>
+               <%-- <tr><td>checked：</td>
                     <td>
                         <select id="selectChecked" name="checked" required="true" class="easyui-combobox" style="width: 173px;">
                             <option value=""></option>
@@ -153,7 +161,7 @@
                             <option value="false">false</option>
                         </select>
                     </td>
-                </tr>
+                </tr>--%>
                 <tr><td>iconCls：</td><td><input class="easyui-validatebox" type="text" name="iconCls" /></td></tr>
                 <tr><td>state：</td>
                     <td>
@@ -161,7 +169,7 @@
                             <option value=""></option>
                             <option value="closed">closed</option>
                             <option value="open">open</option>
-                        </select>
+                        </select><font color="red" style="font-size: 11px;">*只有最后一个节点才能是open</font>
                     </td>
                 </tr>
                 <tr><td colspan="2" align="center">

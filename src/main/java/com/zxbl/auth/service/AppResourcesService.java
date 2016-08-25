@@ -28,6 +28,11 @@ public class AppResourcesService {
     public void delete(Integer id){
         this.appResourcesDao.delete(id);
     }
-
+    public AppResources getById(Integer id){
+        return this.appResourcesDao.getById(id);
+    }
+    public List<AppResources> getByIdIn(List ids){
+        return this.appResourcesDao.getByIdIn(ids);
+    }
 
 }
