@@ -136,7 +136,7 @@ public class PersonCtl {
     @ResponseBody
     @RequestMapping("admin/modifyPerson")
     public Object modifyPerson(Person p){
-        System.out.println(p);
+        p.setUpdateTime(new Date(System.currentTimeMillis()));
         this.personService.updateById(p.getWorkNumber(),p.getUserName(),p.getPassword(),p.getRealName(),p.getEmail(),p.getAge(),p.getSex(),p.getUpdateTime(),p.getCreateTime(),p.getId());
 
         Map<String,Object> map = new HashMap<String,Object>();
@@ -167,6 +167,15 @@ public class PersonCtl {
         }
         return "true";
         //return map;
+    }
+
+    @ResponseBody
+    @RequestMapping("admin/createWorkNumber")
+    public Object createWorkNumber(){
+        Integer maxWorkNumber = this.personService.getMaxWorkNumber();
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("workNumber",maxWorkNumber+1);
+        return map;
     }
 
 

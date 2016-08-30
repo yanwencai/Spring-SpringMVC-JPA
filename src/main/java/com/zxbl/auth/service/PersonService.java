@@ -58,4 +58,8 @@ public class PersonService {
     public List<Person> getByIdInOrderByIdAsc(Integer[] ids){
         return this.iAuthPerson.getByIdInOrderByIdAsc(ids);
     }
+
+    public Integer getMaxWorkNumber(){
+        return this.iAuthPerson.getMaxWorkNumber();
+    }
 }

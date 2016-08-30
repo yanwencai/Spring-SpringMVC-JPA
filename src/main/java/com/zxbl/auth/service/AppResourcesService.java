@@ -35,4 +35,8 @@ public class AppResourcesService {
         return this.appResourcesDao.getByIdIn(ids);
     }
 
+    public List<AppResources> getByIdInAndApplicationCodeIn(List ids,List appCode){
+        return this.appResourcesDao.getByIdInAndApplicationCodeIn(ids,appCode);
+    }
+
 }

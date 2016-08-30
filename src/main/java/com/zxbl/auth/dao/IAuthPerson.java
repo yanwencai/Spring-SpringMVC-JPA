@@ -37,4 +37,8 @@ public interface IAuthPerson extends PagingAndSortingRepository<Person, Integer>
 
     List<Person> getByIdInOrderByIdAsc(Integer[] ids);
 
+
+    @Query("select max (workNumber) from Person")
+    Integer getMaxWorkNumber();
+
 }

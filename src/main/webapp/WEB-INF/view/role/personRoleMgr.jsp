@@ -13,12 +13,12 @@
 <body>
 
 <div id="cc" class="easyui-layout" data-options="fit:true">
-   <div data-options="region:'north',title:'角色列表',split:true" style="height:200px;">
+   <div data-options="region:'north',title:'角色列表',split:true,border:false" style="height:200px;">
        <!-- 角色列表 -->
        <div id="personRoleDataGrid"></div>
    </div>
     <%-- <div data-options="region:'south',title:'South Title',split:true" style="height:100px;"></div>--%>
-    <div data-options="region:'center',title:'用户列表'" style="padding:5px;background:#eee;">
+    <div data-options="region:'center',title:'用户列表',border:false" >
         <!-- 用户列表 -->
         <div id="personRoleUserDataGrid"></div>
         <div id="personRoleTb" style="display: none;">
@@ -123,6 +123,7 @@
                 pagination: "true",
                 rownumbers: true,
                 fit:true,
+                border:false,
                 fitColumns: true,
                 singleSelect: false,
                 queryParams: roleparam,
@@ -208,6 +209,7 @@
         idField: "id",
         pagination: "true",
         fit:true,
+        border:false,
         rownumbers: true,
         fitColumns: true,
         singleSelect: true,

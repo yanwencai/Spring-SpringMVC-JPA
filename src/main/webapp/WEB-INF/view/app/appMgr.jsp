@@ -169,7 +169,7 @@
                             <option value=""></option>
                             <option value="closed">closed</option>
                             <option value="open">open</option>
-                        </select><font color="red" style="font-size: 11px;">*只有最后一个节点才能是open</font>
+                        </select><font color="red" style="font-size: 11px;">*如果没有子节点，请选择open</font>
                     </td>
                 </tr>
                 <tr><td colspan="2" align="center">

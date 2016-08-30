@@ -45,6 +45,8 @@ $.extend($.fn.datagrid.defaults.editors, {
         //pageList:[10,20,30,40,50,100],
         singleSelect:true,
         striped:true,
+        fitColumns:true,
+        border:false,
         idField:'id',
         columns:[[
             {field:'id',title:'id',width:100,hidden:true},
@@ -119,8 +121,11 @@ $.extend($.fn.datagrid.defaults.editors, {
 
         },
         add:function () {
+            $.post("admin/createWorkNumber","",function (data) {
+                $("#addwin input[name=workNumber]").val(data.workNumber).removeClass("validatebox-invalid")
+            });
             $("#addPerson").form('clear');//清除表单数据
-            $("#addwin").window("open");
+            $("#addwin").dialog("open");
         },
         search:function () {
           $('#dg').datagrid('load',{
@@ -145,10 +150,10 @@ $.extend($.fn.datagrid.defaults.editors, {
                         });
                     }else{
                         $("input[name="+name+"]").removeClass('validatebox-invalid');//取消验证框的红色提示
-                        $("input[name="+name+"]").val(person[name])
+                        $("#win input[name="+name+"]").val(person[name])
                     }
                 }
-                $("#win").window("open");
+                $("#win").dialog("open");
             }else{
                 $.messager.alert("警告","请选择一行","warning");
             }
@@ -204,9 +209,9 @@ $.extend($.fn.datagrid.defaults.editors, {
 </script>
 
 <div id="tb">
-    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="obj.add();">Add</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="obj.add();">添加</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="obj.modify();">修改</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:alert('remove')">remove</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:alert('remove')">删除</a>
     <a href="#" id="save" style="display: none;" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="obj.save();">save</a>
     <br/>
     <form autocomplete="off">
@@ -216,11 +221,11 @@ $.extend($.fn.datagrid.defaults.editors, {
 </div>
 
 <!-- 修改 -->
-<div id="win" class="easyui-window" title="修改人员信息" style="width:600px;height:400px;"
-     data-options="iconCls:'icon-save',modal:true,closed:true">
+<div id="win" class="easyui-dialog" title="修改人员信息" style="width:400px;height:400px;"
+     data-options="iconCls:'icon-edit',modal:true,closed:true" buttons="#dlg-buttons">
     <form id="modifyPerson" method="post" autocomplete="off">
        <table style="margin-left:10px; height: 310px;">
-           <tr><td>id:</td><td><input class="easyui-validatebox" type="text" name="id" data-options="required:true" />  </td></tr>
+           <tr><td>id:</td><td><input class="easyui-validatebox" type="text" name="id" readonly="readonly" data-options="required:true" />  </td></tr>
            <tr><td>realName:</td><td><input class="easyui-validatebox" type="text" name="realName" data-options="required:true" />  </td></tr>
            <tr><td>workNumber:</td><td><input class="easyui-validatebox" type="text" name="workNumber" data-options="required:true" />  </td></tr>
            <tr><td>age:</td><td><input class="easyui-validatebox" type="text" name="age" data-options="required:true" />  </td></tr>
@@ -237,18 +242,17 @@ $.extend($.fn.datagrid.defaults.editors, {
            <tr><td>password:</td><td><input class="easyui-validatebox" type="text" name="password" data-options="required:true" />  </td></tr>
            <tr><td>email:</td><td><input class="easyui-validatebox" type="text" name="email" data-options="required:true,validType:'email'" />  </td></tr>
            <tr><td>createTime:</td><td><input id="createTime" class="easyui-datetimebox" editable="false" type="text" name="createTime" data-options="required:true" />  </td></tr>
-           <tr><td colspan="2">
-               <a id="btn2" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="modifySubmit();">保存</a>
-               <a id="btn1" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="JavaScript:$('#win').window('close')">关闭</a>
-           </td></tr>
        </table>
-
     </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="modifySubmit();" style="width:90px">Save</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#win').dialog('close')" style="width:90px">Cancel</a>
 </div>
 
 <!-- 新增 -->
-<div id="addwin" class="easyui-window" title="添加人员信息" style="width:600px;height:400px;"
-     data-options="iconCls:'icon-save',modal:true,closed:true">
+<div id="addwin" class="easyui-dialog" title="添加人员信息" style="width:400px;height:400px;"
+     data-options="iconCls:'icon-add',modal:true,closed:true" buttons="#adddialogbtn">
     <form id="addPerson" method="post" autocomplete="off">
         <table style="margin-left:10px; height: 310px;">
             <tr><td>realName:</td><td><input class="easyui-validatebox" type="text" name="realName" data-options="required:true" />  </td></tr>
@@ -268,11 +272,13 @@ $.extend($.fn.datagrid.defaults.editors, {
             <tr><td>password:</td><td><input class="easyui-validatebox" type="text" name="password" data-options="required:true" />  </td></tr>
             <tr><td>email:</td><td><input class="easyui-validatebox" type="text" name="email" data-options="required:true,validType:'email'" />  </td></tr>
             <tr><td>createTime:</td><td><input class="easyui-datetimebox" editable="false" type="text" name="createTime" data-options="required:true" />  </td></tr>
-            <tr><td colspan="2"><a id="btn" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="addSubmit();">保存</a>
-            </td></tr>
         </table>
 
     </form>
+</div>
+<div id="adddialogbtn">
+    <a id="btn2" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="addSubmit();">保存</a>
+    <a id="btn3" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" onclick="$('#addwin').dialog('close')">取消</a>
 </div>
 </body>
 

@@ -257,6 +257,7 @@
         rownumbers: true,
         fitColumns: true,
         singleSelect: true,
+        border:false,
         columns: [[
             {field: "id", title: "id"},
             {field: "roleName", title: "roleName", sortable: "true",},

@@ -16,4 +16,6 @@ public interface AppResourcesDao extends CrudRepository<AppResources,Integer> {
 
     List<AppResources> getByIdIn(List ids);
 
+    List<AppResources> getByIdInAndApplicationCodeIn(List ids,List appCode);
+
 }
